@@ -3,312 +3,1097 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>BrainSAIT LinkedIn Automation Dashboard</title>
+    <title>🧠 BrainSAIT | Advanced LinkedIn Automation Platform</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
+    
     <style>
       .gradient-bg {
+        background: linear-gradient(135deg, #0f0f23 0%, #1a0933 25%, #0f0f23 50%, #1a0933 75%, #0f0f23 100%);
+        background-size: 400% 400%;
+        animation: gradientShift 15s ease infinite;
+      }
+      
+      @keyframes gradientShift {
+        0%, 100% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+      }
+      
+      .glass-card {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        transition: all 0.3s ease;
+      }
+      
+      .glass-card:hover {
+        background: rgba(255, 255, 255, 0.08);
+        transform: translateY(-5px);
+        box-shadow: 0 20px 40px 0 rgba(31, 38, 135, 0.5);
+      }
+      
+      .neon-glow {
+        box-shadow: 0 0 20px rgba(139, 92, 246, 0.3), 0 0 40px rgba(139, 92, 246, 0.2);
+      }
+      
+      .neon-glow:hover {
+        box-shadow: 0 0 30px rgba(139, 92, 246, 0.5), 0 0 60px rgba(139, 92, 246, 0.3);
+      }
+      
+      .btn-gradient {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        transition: all 0.3s ease;
       }
-      .card {
-        backdrop-filter: blur(10px);
-        background: rgba(255, 255, 255, 0.95);
+      
+      .btn-gradient:hover {
+        background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
       }
-      .rtl-support {
-        direction: rtl;
-        text-align: right;
+      
+      .text-glow {
+        text-shadow: 0 0 10px rgba(139, 92, 246, 0.5);
+      }
+      
+      .nav-item.active {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        box-shadow: 0 0 20px rgba(102, 126, 234, 0.4);
+      }
+      
+      .automation-status.running {
+        animation: pulse 2s infinite;
+      }
+      
+      @keyframes pulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+      }
+      
+      .progress-bar {
+        background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+        animation: shimmer 2s infinite;
+      }
+      
+      @keyframes shimmer {
+        0% { background-position: -200% 0; }
+        100% { background-position: 200% 0; }
+      }
+      
+      .module-card {
+        background: rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        transition: all 0.3s ease;
+      }
+      
+      .module-card:hover {
+        background: rgba(255, 255, 255, 0.06);
+        border-color: rgba(139, 92, 246, 0.3);
+        box-shadow: 0 0 30px rgba(139, 92, 246, 0.2);
+      }
+      
+      .tab-content {
+        display: none;
+      }
+      
+      .tab-content.active {
+        display: block;
+        animation: fadeIn 0.5s ease-in-out;
+      }
+      
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      
+      .stat-card {
+        background: rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        transition: all 0.3s ease;
+      }
+      
+      .stat-card:hover {
+        background: rgba(255, 255, 255, 0.06);
+        border-color: rgba(139, 92, 246, 0.3);
+        box-shadow: 0 0 30px rgba(139, 92, 246, 0.2);
+      }
+      
+      .message-type-btn.active {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border-color: #667eea;
+        box-shadow: 0 0 20px rgba(102, 126, 234, 0.4);
       }
     </style>
   </head>
-  <body class="gradient-bg min-h-screen">
-    <div class="container mx-auto px-4 py-8">
-      <!-- Header -->
-      <header class="mb-8">
-        <div class="flex items-center justify-between">
-          <div class="flex items-center space-x-4">
-            <div class="bg-white rounded-full p-3 shadow-lg">
-              <i class="fas fa-brain text-2xl text-indigo-600"></i>
-            </div>
-            <div>
-              <h1 class="text-3xl font-bold text-white">
-                BrainSAIT LinkedIn Automation
-              </h1>
-              <p class="text-indigo-100">Healthcare-Focused AI Platform</p>
-            </div>
+  
+  <body class="gradient-bg min-h-screen text-white">
+    <!-- Advanced Navigation Sidebar -->
+    <div class="flex min-h-screen">
+      <!-- Sidebar -->
+      <div class="w-64 glass-card m-4 rounded-xl p-6 flex flex-col">
+        <!-- Logo -->
+        <div class="flex items-center space-x-3 mb-8" data-aos="fade-right">
+          <div class="w-12 h-12 glass-card rounded-xl p-3 neon-glow">
+            <i class="fas fa-brain text-lg text-purple-400 text-glow"></i>
           </div>
-          <div class="flex items-center space-x-4">
-            <div class="bg-white rounded-lg px-4 py-2 shadow-lg">
-              <span class="text-sm text-gray-600">Status:</span>
-              <span id="system-status" class="font-semibold text-green-600"
-                >Online</span
-              >
-            </div>
-            <div class="bg-white rounded-lg px-4 py-2 shadow-lg">
-              <span class="text-sm text-gray-600">Time:</span>
-              <span
-                id="current-time"
-                class="font-semibold text-gray-800"
-              ></span>
-            </div>
+          <div>
+            <h1 class="text-xl font-bold text-glow">BrainSAIT</h1>
+            <p class="text-xs text-purple-200">LinkedIn Automation</p>
           </div>
         </div>
-      </header>
-
-      <!-- Key Metrics -->
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        <div class="card rounded-xl p-6 shadow-xl">
+        
+        <!-- Navigation Menu -->
+        <nav class="space-y-2 flex-1" data-aos="fade-right" data-aos-delay="200">
+          <button onclick="showTab('dashboard')" class="nav-item active w-full text-left px-4 py-3 rounded-lg transition-all duration-200 flex items-center space-x-3">
+            <i class="fas fa-chart-line"></i>
+            <span>Dashboard</span>
+          </button>
+          
+          <button onclick="showTab('automation')" class="nav-item w-full text-left px-4 py-3 rounded-lg transition-all duration-200 flex items-center space-x-3 hover:bg-white/10">
+            <i class="fas fa-robot"></i>
+            <span>Automation Hub</span>
+          </button>
+          
+          <button onclick="showTab('contacts')" class="nav-item w-full text-left px-4 py-3 rounded-lg transition-all duration-200 flex items-center space-x-3 hover:bg-white/10">
+            <i class="fas fa-users"></i>
+            <span>Contact Manager</span>
+          </button>
+          
+          <button onclick="showTab('campaigns')" class="nav-item w-full text-left px-4 py-3 rounded-lg transition-all duration-200 flex items-center space-x-3 hover:bg-white/10">
+            <i class="fas fa-bullhorn"></i>
+            <span>Campaigns</span>
+          </button>
+          
+          <button onclick="showTab('content')" class="nav-item w-full text-left px-4 py-3 rounded-lg transition-all duration-200 flex items-center space-x-3 hover:bg-white/10">
+            <i class="fas fa-magic"></i>
+            <span>AI Content Studio</span>
+          </button>
+          
+          <button onclick="showTab('analytics')" class="nav-item w-full text-left px-4 py-3 rounded-lg transition-all duration-200 flex items-center space-x-3 hover:bg-white/10">
+            <i class="fas fa-chart-bar"></i>
+            <span>Analytics</span>
+          </button>
+          
+          <button onclick="showTab('profiles')" class="nav-item w-full text-left px-4 py-3 rounded-lg transition-all duration-200 flex items-center space-x-3 hover:bg-white/10">
+            <i class="fas fa-user-cog"></i>
+            <span>Profile Manager</span>
+          </button>
+          
+          <button onclick="showTab('settings')" class="nav-item w-full text-left px-4 py-3 rounded-lg transition-all duration-200 flex items-center space-x-3 hover:bg-white/10">
+            <i class="fas fa-cog"></i>
+            <span>Settings</span>
+          </button>
+        </nav>
+        
+        <!-- Status Indicator -->
+        <div class="mt-auto pt-6 border-t border-white/10" data-aos="fade-right" data-aos-delay="400">
           <div class="flex items-center justify-between">
-            <div>
-              <p class="text-sm text-gray-600 mb-1">Active Campaigns</p>
-              <p
-                id="active-campaigns"
-                class="text-3xl font-bold text-indigo-600"
-              >
-                0
-              </p>
+            <span class="text-sm text-gray-400">System Status</span>
+            <div class="flex items-center space-x-2">
+              <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+              <span class="text-xs text-green-400">Active</span>
             </div>
-            <div class="bg-indigo-100 rounded-full p-3">
-              <i class="fas fa-bullhorn text-indigo-600"></i>
-            </div>
-          </div>
-          <div class="mt-4">
-            <span class="text-green-600 text-sm font-medium">
-              <i class="fas fa-arrow-up"></i> 12%
-            </span>
-            <span class="text-gray-600 text-sm ml-2">vs last week</span>
-          </div>
-        </div>
-
-        <div class="card rounded-xl p-6 shadow-xl">
-          <div class="flex items-center justify-between">
-            <div>
-              <p class="text-sm text-gray-600 mb-1">Messages Sent</p>
-              <p id="messages-sent" class="text-3xl font-bold text-green-600">
-                0
-              </p>
-            </div>
-            <div class="bg-green-100 rounded-full p-3">
-              <i class="fas fa-paper-plane text-green-600"></i>
-            </div>
-          </div>
-          <div class="mt-4">
-            <span class="text-green-600 text-sm font-medium">
-              <i class="fas fa-arrow-up"></i> 8%
-            </span>
-            <span class="text-gray-600 text-sm ml-2">vs yesterday</span>
-          </div>
-        </div>
-
-        <div class="card rounded-xl p-6 shadow-xl">
-          <div class="flex items-center justify-between">
-            <div>
-              <p class="text-sm text-gray-600 mb-1">Response Rate</p>
-              <p id="response-rate" class="text-3xl font-bold text-yellow-600">
-                0%
-              </p>
-            </div>
-            <div class="bg-yellow-100 rounded-full p-3">
-              <i class="fas fa-reply text-yellow-600"></i>
-            </div>
-          </div>
-          <div class="mt-4">
-            <span class="text-green-600 text-sm font-medium">
-              <i class="fas fa-arrow-up"></i> 5%
-            </span>
-            <span class="text-gray-600 text-sm ml-2">vs last month</span>
-          </div>
-        </div>
-
-        <div class="card rounded-xl p-6 shadow-xl">
-          <div class="flex items-center justify-between">
-            <div>
-              <p class="text-sm text-gray-600 mb-1">Leads Generated</p>
-              <p
-                id="leads-generated"
-                class="text-3xl font-bold text-purple-600"
-              >
-                0
-              </p>
-            </div>
-            <div class="bg-purple-100 rounded-full p-3">
-              <i class="fas fa-users text-purple-600"></i>
-            </div>
-          </div>
-          <div class="mt-4">
-            <span class="text-green-600 text-sm font-medium">
-              <i class="fas fa-arrow-up"></i> 15%
-            </span>
-            <span class="text-gray-600 text-sm ml-2">vs last week</span>
           </div>
         </div>
       </div>
-
-      <!-- Charts and Analytics -->
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-        <!-- Message Performance Chart -->
-        <div class="card rounded-xl p-6 shadow-xl">
-          <h3 class="text-xl font-semibold text-gray-800 mb-4">
-            Message Performance
-          </h3>
-          <canvas id="messageChart" height="200"></canvas>
-        </div>
-
-        <!-- Account Health -->
-        <div class="card rounded-xl p-6 shadow-xl">
-          <h3 class="text-xl font-semibold text-gray-800 mb-4">
-            Account Health
-          </h3>
-          <div id="account-health" class="space-y-4">
-            <!-- Account health items will be populated here -->
+      
+      <!-- Main Content Area -->
+      <div class="flex-1 p-4">
+        
+        <!-- Dashboard Tab -->
+        <div id="dashboard" class="tab-content active">
+          <!-- Header -->
+          <div class="glass-card rounded-xl p-6 mb-6" data-aos="fade-down">
+            <div class="flex items-center justify-between">
+              <div>
+                <h1 class="text-3xl font-bold text-glow mb-2">Advanced LinkedIn Automation Platform</h1>
+                <p class="text-gray-300">Healthcare Professionals & MENA Region Specialists</p>
+              </div>
+              <div class="flex items-center space-x-4">
+                <button class="btn-gradient px-6 py-2 rounded-lg font-semibold">
+                  <i class="fas fa-play mr-2"></i>Start Campaign
+                </button>
+                <div class="automation-status running glass-card px-4 py-2 rounded-lg">
+                  <i class="fas fa-bolt text-yellow-400 mr-2"></i>
+                  <span class="text-sm">5 Automations Running</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Stats Overview -->
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+            <div class="stat-card rounded-xl p-6" data-aos="fade-up" data-aos-delay="100">
+              <div class="flex items-center justify-between">
+                <div>
+                  <p class="text-gray-400 text-sm">Total Connections</p>
+                  <p class="text-2xl font-bold text-glow">2,847</p>
+                  <p class="text-green-400 text-sm"><i class="fas fa-arrow-up"></i> +12% this week</p>
+                </div>
+                <div class="w-12 h-12 glass-card rounded-lg p-3 neon-glow">
+                  <i class="fas fa-users text-purple-400"></i>
+                </div>
+              </div>
+            </div>
+            
+            <div class="stat-card rounded-xl p-6" data-aos="fade-up" data-aos-delay="200">
+              <div class="flex items-center justify-between">
+                <div>
+                  <p class="text-gray-400 text-sm">Messages Sent</p>
+                  <p class="text-2xl font-bold text-glow">1,456</p>
+                  <p class="text-green-400 text-sm"><i class="fas fa-arrow-up"></i> +8% this week</p>
+                </div>
+                <div class="w-12 h-12 glass-card rounded-lg p-3 neon-glow">
+                  <i class="fas fa-paper-plane text-blue-400"></i>
+                </div>
+              </div>
+            </div>
+            
+            <div class="stat-card rounded-xl p-6" data-aos="fade-up" data-aos-delay="300">
+              <div class="flex items-center justify-between">
+                <div>
+                  <p class="text-gray-400 text-sm">Response Rate</p>
+                  <p class="text-2xl font-bold text-glow">34.8%</p>
+                  <p class="text-green-400 text-sm"><i class="fas fa-arrow-up"></i> +5% this week</p>
+                </div>
+                <div class="w-12 h-12 glass-card rounded-lg p-3 neon-glow">
+                  <i class="fas fa-chart-line text-green-400"></i>
+                </div>
+              </div>
+            </div>
+            
+            <div class="stat-card rounded-xl p-6" data-aos="fade-up" data-aos-delay="400">
+              <div class="flex items-center justify-between">
+                <div>
+                  <p class="text-gray-400 text-sm">Leads Generated</p>
+                  <p class="text-2xl font-bold text-glow">127</p>
+                  <p class="text-green-400 text-sm"><i class="fas fa-arrow-up"></i> +18% this week</p>
+                </div>
+                <div class="w-12 h-12 glass-card rounded-lg p-3 neon-glow">
+                  <i class="fas fa-target text-orange-400"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Active Campaigns & Recent Activity -->
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+            <!-- Active Campaigns -->
+            <div class="glass-card rounded-xl p-6" data-aos="fade-right">
+              <h3 class="text-xl font-bold mb-4 text-glow">Active Campaigns</h3>
+              <div class="space-y-4">
+                <div class="module-card rounded-lg p-4">
+                  <div class="flex items-center justify-between mb-2">
+                    <h4 class="font-semibold">Healthcare Professionals - UAE</h4>
+                    <span class="text-green-400 text-sm">Running</span>
+                  </div>
+                  <div class="w-full bg-gray-700 rounded-full h-2 mb-2">
+                    <div class="progress-bar h-2 rounded-full" style="width: 73%"></div>
+                  </div>
+                  <div class="flex justify-between text-sm text-gray-400">
+                    <span>Progress: 73%</span>
+                    <span>234 connections made</span>
+                  </div>
+                </div>
+                
+                <div class="module-card rounded-lg p-4">
+                  <div class="flex items-center justify-between mb-2">
+                    <h4 class="font-semibold">Medical Device Sales - KSA</h4>
+                    <span class="text-yellow-400 text-sm">Scheduled</span>
+                  </div>
+                  <div class="w-full bg-gray-700 rounded-full h-2 mb-2">
+                    <div class="progress-bar h-2 rounded-full" style="width: 45%"></div>
+                  </div>
+                  <div class="flex justify-between text-sm text-gray-400">
+                    <span>Progress: 45%</span>
+                    <span>156 connections made</span>
+                  </div>
+                </div>
+                
+                <div class="module-card rounded-lg p-4">
+                  <div class="flex items-center justify-between mb-2">
+                    <h4 class="font-semibold">Telemedicine Specialists</h4>
+                    <span class="text-blue-400 text-sm">Pending</span>
+                  </div>
+                  <div class="w-full bg-gray-700 rounded-full h-2 mb-2">
+                    <div class="progress-bar h-2 rounded-full" style="width: 12%"></div>
+                  </div>
+                  <div class="flex justify-between text-sm text-gray-400">
+                    <span>Progress: 12%</span>
+                    <span>43 connections made</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Recent Activity -->
+            <div class="glass-card rounded-xl p-6" data-aos="fade-left">
+              <h3 class="text-xl font-bold mb-4 text-glow">Recent Activity</h3>
+              <div class="space-y-4">
+                <div class="flex items-center space-x-4 p-3 module-card rounded-lg">
+                  <div class="w-10 h-10 glass-card rounded-full p-2">
+                    <i class="fas fa-user-plus text-green-400"></i>
+                  </div>
+                  <div class="flex-1">
+                    <p class="font-semibold">New connection accepted</p>
+                    <p class="text-sm text-gray-400">Dr. Ahmed Hassan (Cardiologist)</p>
+                  </div>
+                  <span class="text-xs text-gray-500">2 min ago</span>
+                </div>
+                
+                <div class="flex items-center space-x-4 p-3 module-card rounded-lg">
+                  <div class="w-10 h-10 glass-card rounded-full p-2">
+                    <i class="fas fa-reply text-blue-400"></i>
+                  </div>
+                  <div class="flex-1">
+                    <p class="font-semibold">Message replied</p>
+                    <p class="text-sm text-gray-400">Response from pharmaceutical lead</p>
+                  </div>
+                  <span class="text-xs text-gray-500">5 min ago</span>
+                </div>
+                
+                <div class="flex items-center space-x-4 p-3 module-card rounded-lg">
+                  <div class="w-10 h-10 glass-card rounded-full p-2">
+                    <i class="fas fa-chart-line text-purple-400"></i>
+                  </div>
+                  <div class="flex-1">
+                    <p class="font-semibold">Campaign milestone reached</p>
+                    <p class="text-sm text-gray-400">Healthcare UAE campaign: 200 connections</p>
+                  </div>
+                  <span class="text-xs text-gray-500">1 hour ago</span>
+                </div>
+                
+                <div class="flex items-center space-x-4 p-3 module-card rounded-lg">
+                  <div class="w-10 h-10 glass-card rounded-full p-2">
+                    <i class="fas fa-magic text-yellow-400"></i>
+                  </div>
+                  <div class="flex-1">
+                    <p class="font-semibold">AI content generated</p>
+                    <p class="text-sm text-gray-400">5 new personalized messages created</p>
+                  </div>
+                  <span class="text-xs text-gray-500">2 hours ago</span>
+                </div>
+                
+                <div class="flex items-center space-x-4 p-3 module-card rounded-lg">
+                  <div class="w-10 h-10 glass-card rounded-full p-2">
+                    <i class="fas fa-bell text-orange-400"></i>
+                  </div>
+                  <div class="flex-1">
+                    <p class="font-semibold">Automation scheduled</p>
+                    <p class="text-sm text-gray-400">Follow-up sequence for 50 prospects</p>
+                  </div>
+                  <span class="text-xs text-gray-500">3 hours ago</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Performance Chart -->
+          <div class="glass-card rounded-xl p-6" data-aos="fade-up">
+            <h3 class="text-xl font-bold mb-4 text-glow">Performance Overview</h3>
+            <canvas id="performanceChart" class="w-full h-64"></canvas>
           </div>
         </div>
-      </div>
-
-      <!-- Campaign Management -->
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <!-- Active Campaigns -->
-        <div class="lg:col-span-2 card rounded-xl p-6 shadow-xl">
-          <div class="flex items-center justify-between mb-6">
-            <h3 class="text-xl font-semibold text-gray-800">
-              Active Campaigns
-            </h3>
-            <button
-              id="create-campaign-btn"
-              class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors"
-            >
-              <i class="fas fa-plus mr-2"></i>Create Campaign
-            </button>
-          </div>
-          <div id="campaigns-list" class="space-y-4">
-            <!-- Campaigns will be populated here -->
+        
+        <!-- Automation Hub Tab -->
+        <div id="automation" class="tab-content">
+          <div class="glass-card rounded-xl p-6 mb-6" data-aos="fade-down">
+            <h2 class="text-2xl font-bold text-glow mb-4">Automation Hub</h2>
+            <p class="text-gray-300 mb-6">Manage your LinkedIn automation workflows and sequences</p>
+            
+            <!-- Automation Modules -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <!-- Connection Automation -->
+              <div class="module-card rounded-xl p-6" data-aos="flip-left" data-aos-delay="100">
+                <div class="flex items-center justify-between mb-4">
+                  <div class="w-12 h-12 glass-card rounded-xl p-3 neon-glow">
+                    <i class="fas fa-users text-purple-400"></i>
+                  </div>
+                  <div class="automation-status running text-green-400">
+                    <i class="fas fa-circle text-xs"></i>
+                  </div>
+                </div>
+                <h3 class="text-lg font-bold mb-2">Connection Automation</h3>
+                <p class="text-gray-400 text-sm mb-4">Automatically send connection requests to targeted healthcare professionals</p>
+                <div class="space-y-2 mb-4">
+                  <div class="flex justify-between text-sm">
+                    <span>Daily limit:</span>
+                    <span class="text-purple-400">50 requests</span>
+                  </div>
+                  <div class="flex justify-between text-sm">
+                    <span>Success rate:</span>
+                    <span class="text-green-400">68%</span>
+                  </div>
+                </div>
+                <button class="w-full btn-gradient py-2 rounded-lg font-semibold">
+                  Configure
+                </button>
+              </div>
+              
+              <!-- Message Sequences -->
+              <div class="module-card rounded-xl p-6" data-aos="flip-left" data-aos-delay="200">
+                <div class="flex items-center justify-between mb-4">
+                  <div class="w-12 h-12 glass-card rounded-xl p-3 neon-glow">
+                    <i class="fas fa-paper-plane text-blue-400"></i>
+                  </div>
+                  <div class="automation-status running text-green-400">
+                    <i class="fas fa-circle text-xs"></i>
+                  </div>
+                </div>
+                <h3 class="text-lg font-bold mb-2">Message Sequences</h3>
+                <p class="text-gray-400 text-sm mb-4">Send personalized follow-up sequences to your connections</p>
+                <div class="space-y-2 mb-4">
+                  <div class="flex justify-between text-sm">
+                    <span>Active sequences:</span>
+                    <span class="text-purple-400">12</span>
+                  </div>
+                  <div class="flex justify-between text-sm">
+                    <span>Response rate:</span>
+                    <span class="text-green-400">34.8%</span>
+                  </div>
+                </div>
+                <button class="w-full btn-gradient py-2 rounded-lg font-semibold">
+                  Configure
+                </button>
+              </div>
+              
+              <!-- Profile Visits -->
+              <div class="module-card rounded-xl p-6" data-aos="flip-left" data-aos-delay="300">
+                <div class="flex items-center justify-between mb-4">
+                  <div class="w-12 h-12 glass-card rounded-xl p-3 neon-glow">
+                    <i class="fas fa-eye text-yellow-400"></i>
+                  </div>
+                  <div class="automation-status text-gray-400">
+                    <i class="fas fa-circle text-xs"></i>
+                  </div>
+                </div>
+                <h3 class="text-lg font-bold mb-2">Profile Visits</h3>
+                <p class="text-gray-400 text-sm mb-4">Automatically visit profiles to increase visibility and engagement</p>
+                <div class="space-y-2 mb-4">
+                  <div class="flex justify-between text-sm">
+                    <span>Daily visits:</span>
+                    <span class="text-purple-400">100</span>
+                  </div>
+                  <div class="flex justify-between text-sm">
+                    <span>View back rate:</span>
+                    <span class="text-green-400">23%</span>
+                  </div>
+                </div>
+                <button class="w-full btn-gradient py-2 rounded-lg font-semibold">
+                  Configure
+                </button>
+              </div>
+              
+              <!-- Content Engagement -->
+              <div class="module-card rounded-xl p-6" data-aos="flip-left" data-aos-delay="400">
+                <div class="flex items-center justify-between mb-4">
+                  <div class="w-12 h-12 glass-card rounded-xl p-3 neon-glow">
+                    <i class="fas fa-heart text-red-400"></i>
+                  </div>
+                  <div class="automation-status running text-green-400">
+                    <i class="fas fa-circle text-xs"></i>
+                  </div>
+                </div>
+                <h3 class="text-lg font-bold mb-2">Content Engagement</h3>
+                <p class="text-gray-400 text-sm mb-4">Like and comment on relevant healthcare industry content</p>
+                <div class="space-y-2 mb-4">
+                  <div class="flex justify-between text-sm">
+                    <span>Daily interactions:</span>
+                    <span class="text-purple-400">75</span>
+                  </div>
+                  <div class="flex justify-between text-sm">
+                    <span>Engagement rate:</span>
+                    <span class="text-green-400">89%</span>
+                  </div>
+                </div>
+                <button class="w-full btn-gradient py-2 rounded-lg font-semibold">
+                  Configure
+                </button>
+              </div>
+              
+              <!-- Lead Nurturing -->
+              <div class="module-card rounded-xl p-6" data-aos="flip-left" data-aos-delay="500">
+                <div class="flex items-center justify-between mb-4">
+                  <div class="w-12 h-12 glass-card rounded-xl p-3 neon-glow">
+                    <i class="fas fa-seedling text-green-400"></i>
+                  </div>
+                  <div class="automation-status running text-green-400">
+                    <i class="fas fa-circle text-xs"></i>
+                  </div>
+                </div>
+                <h3 class="text-lg font-bold mb-2">Lead Nurturing</h3>
+                <p class="text-gray-400 text-sm mb-4">Automatically nurture leads through personalized workflows</p>
+                <div class="space-y-2 mb-4">
+                  <div class="flex justify-between text-sm">
+                    <span>Active workflows:</span>
+                    <span class="text-purple-400">8</span>
+                  </div>
+                  <div class="flex justify-between text-sm">
+                    <span>Conversion rate:</span>
+                    <span class="text-green-400">12.5%</span>
+                  </div>
+                </div>
+                <button class="w-full btn-gradient py-2 rounded-lg font-semibold">
+                  Configure
+                </button>
+              </div>
+              
+              <!-- Smart Scheduling -->
+              <div class="module-card rounded-xl p-6" data-aos="flip-left" data-aos-delay="600">
+                <div class="flex items-center justify-between mb-4">
+                  <div class="w-12 h-12 glass-card rounded-xl p-3 neon-glow">
+                    <i class="fas fa-clock text-orange-400"></i>
+                  </div>
+                  <div class="automation-status running text-green-400">
+                    <i class="fas fa-circle text-xs"></i>
+                  </div>
+                </div>
+                <h3 class="text-lg font-bold mb-2">Smart Scheduling</h3>
+                <p class="text-gray-400 text-sm mb-4">Optimize timing for maximum engagement based on audience behavior</p>
+                <div class="space-y-2 mb-4">
+                  <div class="flex justify-between text-sm">
+                    <span>Optimal times:</span>
+                    <span class="text-purple-400">Detected</span>
+                  </div>
+                  <div class="flex justify-between text-sm">
+                    <span>Efficiency gain:</span>
+                    <span class="text-green-400">+45%</span>
+                  </div>
+                </div>
+                <button class="w-full btn-gradient py-2 rounded-lg font-semibold">
+                  Configure
+                </button>
+              </div>
+            </div>
           </div>
         </div>
-
-        <!-- Quick Actions -->
-        <div class="card rounded-xl p-6 shadow-xl">
-          <h3 class="text-xl font-semibold text-gray-800 mb-6">
-            Quick Actions
-          </h3>
-          <div class="space-y-4">
-            <button
-              class="w-full bg-green-600 text-white px-4 py-3 rounded-lg hover:bg-green-700 transition-colors"
-            >
-              <i class="fas fa-play mr-2"></i>Start Automation
-            </button>
-            <button
-              class="w-full bg-red-600 text-white px-4 py-3 rounded-lg hover:bg-red-700 transition-colors"
-            >
-              <i class="fas fa-pause mr-2"></i>Pause All
-            </button>
-            <button
-              class="w-full bg-blue-600 text-white px-4 py-3 rounded-lg hover:bg-blue-700 transition-colors"
-            >
-              <i class="fas fa-download mr-2"></i>Export Data
-            </button>
-            <button
-              class="w-full bg-purple-600 text-white px-4 py-3 rounded-lg hover:bg-purple-700 transition-colors"
-            >
-              <i class="fas fa-robot mr-2"></i>AI Insights
-            </button>
-          </div>
-
-          <!-- Language Toggle -->
-          <div class="mt-6 pt-6 border-t border-gray-200">
-            <label class="block text-sm font-medium text-gray-700 mb-2"
-              >Language</label
-            >
-            <select
-              id="language-select"
-              class="w-full border border-gray-300 rounded-lg px-3 py-2"
-            >
-              <option value="en">English</option>
-              <option value="ar">العربية</option>
-            </select>
+        
+        <!-- Contact Manager Tab -->
+        <div id="contacts" class="tab-content">
+          <div class="glass-card rounded-xl p-6" data-aos="fade-up">
+            <h2 class="text-2xl font-bold text-glow mb-4">Contact Manager</h2>
+            <p class="text-gray-300 mb-6">Manage your LinkedIn connections and prospects</p>
+            
+            <!-- Contact Stats -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+              <div class="stat-card rounded-lg p-4 text-center">
+                <i class="fas fa-users text-purple-400 text-2xl mb-2"></i>
+                <div class="text-2xl font-bold">2,847</div>
+                <div class="text-sm text-gray-400">Total Contacts</div>
+              </div>
+              <div class="stat-card rounded-lg p-4 text-center">
+                <i class="fas fa-user-plus text-green-400 text-2xl mb-2"></i>
+                <div class="text-2xl font-bold">156</div>
+                <div class="text-sm text-gray-400">New This Week</div>
+              </div>
+              <div class="stat-card rounded-lg p-4 text-center">
+                <i class="fas fa-star text-yellow-400 text-2xl mb-2"></i>
+                <div class="text-2xl font-bold">89</div>
+                <div class="text-sm text-gray-400">Hot Prospects</div>
+              </div>
+              <div class="stat-card rounded-lg p-4 text-center">
+                <i class="fas fa-handshake text-blue-400 text-2xl mb-2"></i>
+                <div class="text-2xl font-bold">234</div>
+                <div class="text-sm text-gray-400">Qualified Leads</div>
+              </div>
+            </div>
+            
+            <!-- Contact List -->
+            <div class="module-card rounded-xl p-6">
+              <div class="flex items-center justify-between mb-4">
+                <h3 class="text-lg font-bold">Recent Contacts</h3>
+                <button class="btn-gradient px-4 py-2 rounded-lg text-sm">
+                  <i class="fas fa-plus mr-2"></i>Add Contact
+                </button>
+              </div>
+              
+              <div class="space-y-4">
+                <div class="flex items-center justify-between p-4 glass-card rounded-lg">
+                  <div class="flex items-center space-x-4">
+                    <div class="w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center">
+                      <span class="font-bold">AH</span>
+                    </div>
+                    <div>
+                      <h4 class="font-semibold">Dr. Ahmed Hassan</h4>
+                      <p class="text-sm text-gray-400">Cardiologist • Dubai Healthcare</p>
+                      <div class="flex items-center space-x-2 mt-1">
+                        <span class="px-2 py-1 bg-green-500/20 text-green-400 text-xs rounded">Hot Lead</span>
+                        <span class="px-2 py-1 bg-blue-500/20 text-blue-400 text-xs rounded">Healthcare</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="flex items-center space-x-2">
+                    <button class="p-2 glass-card rounded-lg hover:bg-white/10">
+                      <i class="fas fa-comment text-blue-400"></i>
+                    </button>
+                    <button class="p-2 glass-card rounded-lg hover:bg-white/10">
+                      <i class="fas fa-star text-yellow-400"></i>
+                    </button>
+                  </div>
+                </div>
+                
+                <div class="flex items-center justify-between p-4 glass-card rounded-lg">
+                  <div class="flex items-center space-x-4">
+                    <div class="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center">
+                      <span class="font-bold">SM</span>
+                    </div>
+                    <div>
+                      <h4 class="font-semibold">Sarah Mohamed</h4>
+                      <p class="text-sm text-gray-400">Medical Device Sales • Johnson & Johnson</p>
+                      <div class="flex items-center space-x-2 mt-1">
+                        <span class="px-2 py-1 bg-yellow-500/20 text-yellow-400 text-xs rounded">Warm Lead</span>
+                        <span class="px-2 py-1 bg-purple-500/20 text-purple-400 text-xs rounded">Sales</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="flex items-center space-x-2">
+                    <button class="p-2 glass-card rounded-lg hover:bg-white/10">
+                      <i class="fas fa-comment text-blue-400"></i>
+                    </button>
+                    <button class="p-2 glass-card rounded-lg hover:bg-white/10">
+                      <i class="fas fa-star-o text-gray-400"></i>
+                    </button>
+                  </div>
+                </div>
+                
+                <div class="flex items-center justify-between p-4 glass-card rounded-lg">
+                  <div class="flex items-center space-x-4">
+                    <div class="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center">
+                      <span class="font-bold">KA</span>
+                    </div>
+                    <div>
+                      <h4 class="font-semibold">Dr. Khalid Al-Rashid</h4>
+                      <p class="text-sm text-gray-400">Orthopedic Surgeon • King Saud Medical</p>
+                      <div class="flex items-center space-x-2 mt-1">
+                        <span class="px-2 py-1 bg-red-500/20 text-red-400 text-xs rounded">Cold Lead</span>
+                        <span class="px-2 py-1 bg-blue-500/20 text-blue-400 text-xs rounded">Healthcare</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="flex items-center space-x-2">
+                    <button class="p-2 glass-card rounded-lg hover:bg-white/10">
+                      <i class="fas fa-comment text-blue-400"></i>
+                    </button>
+                    <button class="p-2 glass-card rounded-lg hover:bg-white/10">
+                      <i class="fas fa-star-o text-gray-400"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
+        
+        <!-- Campaigns Tab -->
+        <div id="campaigns" class="tab-content">
+          <div class="glass-card rounded-xl p-6" data-aos="fade-up">
+            <h2 class="text-2xl font-bold text-glow mb-4">Campaign Manager</h2>
+            <p class="text-gray-300 mb-6">Create and manage your LinkedIn outreach campaigns</p>
+            
+            <div class="flex justify-between items-center mb-6">
+              <div class="flex space-x-4">
+                <button class="btn-gradient px-6 py-2 rounded-lg font-semibold">
+                  <i class="fas fa-plus mr-2"></i>New Campaign
+                </button>
+                <button class="glass-card px-6 py-2 rounded-lg border border-white/20">
+                  <i class="fas fa-template mr-2"></i>Templates
+                </button>
+              </div>
+              <div class="flex items-center space-x-2">
+                <span class="text-sm text-gray-400">Filter:</span>
+                <select class="glass-card px-3 py-2 rounded-lg border border-white/20 bg-transparent">
+                  <option>All Campaigns</option>
+                  <option>Active</option>
+                  <option>Paused</option>
+                  <option>Completed</option>
+                </select>
+              </div>
+            </div>
+            
+            <!-- Campaign List -->
+            <div class="space-y-4">
+              <div class="module-card rounded-xl p-6">
+                <div class="flex items-center justify-between mb-4">
+                  <div>
+                    <h3 class="text-lg font-bold">Healthcare Professionals - UAE</h3>
+                    <p class="text-gray-400 text-sm">Targeting doctors and medical professionals in the UAE region</p>
+                  </div>
+                  <div class="flex items-center space-x-2">
+                    <span class="px-3 py-1 bg-green-500/20 text-green-400 text-sm rounded-full">Active</span>
+                    <button class="p-2 glass-card rounded-lg hover:bg-white/10">
+                      <i class="fas fa-pause"></i>
+                    </button>
+                    <button class="p-2 glass-card rounded-lg hover:bg-white/10">
+                      <i class="fas fa-edit"></i>
+                    </button>
+                  </div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
+                  <div class="text-center">
+                    <div class="text-2xl font-bold text-purple-400">234</div>
+                    <div class="text-sm text-gray-400">Connections</div>
+                  </div>
+                  <div class="text-center">
+                    <div class="text-2xl font-bold text-blue-400">89</div>
+                    <div class="text-sm text-gray-400">Messages Sent</div>
+                  </div>
+                  <div class="text-center">
+                    <div class="text-2xl font-bold text-green-400">31</div>
+                    <div class="text-sm text-gray-400">Responses</div>
+                  </div>
+                  <div class="text-center">
+                    <div class="text-2xl font-bold text-yellow-400">34.8%</div>
+                    <div class="text-sm text-gray-400">Response Rate</div>
+                  </div>
+                </div>
+                
+                <div class="w-full bg-gray-700 rounded-full h-2">
+                  <div class="progress-bar h-2 rounded-full" style="width: 73%"></div>
+                </div>
+                <div class="flex justify-between text-sm text-gray-400 mt-2">
+                  <span>Progress: 73%</span>
+                  <span>Started: Aug 1, 2025</span>
+                </div>
+              </div>
+              
+              <div class="module-card rounded-xl p-6">
+                <div class="flex items-center justify-between mb-4">
+                  <div>
+                    <h3 class="text-lg font-bold">Medical Device Sales - KSA</h3>
+                    <p class="text-gray-400 text-sm">B2B outreach to medical device sales professionals in Saudi Arabia</p>
+                  </div>
+                  <div class="flex items-center space-x-2">
+                    <span class="px-3 py-1 bg-yellow-500/20 text-yellow-400 text-sm rounded-full">Scheduled</span>
+                    <button class="p-2 glass-card rounded-lg hover:bg-white/10">
+                      <i class="fas fa-play"></i>
+                    </button>
+                    <button class="p-2 glass-card rounded-lg hover:bg-white/10">
+                      <i class="fas fa-edit"></i>
+                    </button>
+                  </div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
+                  <div class="text-center">
+                    <div class="text-2xl font-bold text-purple-400">156</div>
+                    <div class="text-sm text-gray-400">Connections</div>
+                  </div>
+                  <div class="text-center">
+                    <div class="text-2xl font-bold text-blue-400">67</div>
+                    <div class="text-sm text-gray-400">Messages Sent</div>
+                  </div>
+                  <div class="text-center">
+                    <div class="text-2xl font-bold text-green-400">18</div>
+                    <div class="text-sm text-gray-400">Responses</div>
+                  </div>
+                  <div class="text-center">
+                    <div class="text-2xl font-bold text-yellow-400">26.9%</div>
+                    <div class="text-sm text-gray-400">Response Rate</div>
+                  </div>
+                </div>
+                
+                <div class="w-full bg-gray-700 rounded-full h-2">
+                  <div class="progress-bar h-2 rounded-full" style="width: 45%"></div>
+                </div>
+                <div class="flex justify-between text-sm text-gray-400 mt-2">
+                  <span>Progress: 45%</span>
+                  <span>Starts: Aug 20, 2025</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- AI Content Studio Tab -->
+        <div id="content" class="tab-content">
+          <div class="glass-card rounded-xl p-6" data-aos="fade-up">
+            <h2 class="text-2xl font-bold text-glow mb-4">AI Content Studio</h2>
+            <p class="text-gray-300 mb-6">Generate personalized LinkedIn messages using advanced AI</p>
+            
+            <!-- Message Type Selection -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+              <button onclick="selectMessageType('connection')" class="message-type-btn active module-card rounded-xl p-6 text-center transition-all duration-200">
+                <i class="fas fa-user-plus text-2xl mb-3 text-purple-400"></i>
+                <h3 class="font-bold mb-2">Connection Request</h3>
+                <p class="text-sm text-gray-400">Personalized connection request messages</p>
+              </button>
+              
+              <button onclick="selectMessageType('followup')" class="message-type-btn module-card rounded-xl p-6 text-center transition-all duration-200">
+                <i class="fas fa-paper-plane text-2xl mb-3 text-blue-400"></i>
+                <h3 class="font-bold mb-2">Follow-up Message</h3>
+                <p class="text-sm text-gray-400">Engaging follow-up sequences</p>
+              </button>
+              
+              <button onclick="selectMessageType('nurture')" class="message-type-btn module-card rounded-xl p-6 text-center transition-all duration-200">
+                <i class="fas fa-heart text-2xl mb-3 text-red-400"></i>
+                <h3 class="font-bold mb-2">Lead Nurturing</h3>
+                <p class="text-sm text-gray-400">Value-driven nurturing content</p>
+              </button>
+            </div>
+            
+            <!-- Message Generation Form -->
+            <div class="module-card rounded-xl p-6 mb-6">
+              <h3 class="text-lg font-bold mb-4">Generate Personalized Message</h3>
+              
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label class="block text-sm font-medium mb-2">Target Profession</label>
+                  <select class="w-full glass-card px-4 py-3 rounded-lg border border-white/20 bg-transparent">
+                    <option>Healthcare Professional</option>
+                    <option>Medical Device Sales</option>
+                    <option>Pharmaceutical</option>
+                    <option>Hospital Administrator</option>
+                    <option>Medical Technology</option>
+                  </select>
+                </div>
+                
+                <div>
+                  <label class="block text-sm font-medium mb-2">Region/Location</label>
+                  <select class="w-full glass-card px-4 py-3 rounded-lg border border-white/20 bg-transparent">
+                    <option>UAE</option>
+                    <option>Saudi Arabia</option>
+                    <option>Qatar</option>
+                    <option>Kuwait</option>
+                    <option>Other MENA</option>
+                  </select>
+                </div>
+                
+                <div>
+                  <label class="block text-sm font-medium mb-2">Company/Organization</label>
+                  <input type="text" placeholder="e.g., Dubai Healthcare City" class="w-full glass-card px-4 py-3 rounded-lg border border-white/20 bg-transparent">
+                </div>
+                
+                <div>
+                  <label class="block text-sm font-medium mb-2">Specialization</label>
+                  <input type="text" placeholder="e.g., Cardiology, Oncology" class="w-full glass-card px-4 py-3 rounded-lg border border-white/20 bg-transparent">
+                </div>
+              </div>
+              
+              <div class="mt-6">
+                <label class="block text-sm font-medium mb-2">Additional Context (Optional)</label>
+                <textarea placeholder="Any specific details about the prospect or your offering..." class="w-full glass-card px-4 py-3 rounded-lg border border-white/20 bg-transparent h-24 resize-none"></textarea>
+              </div>
+              
+              <div class="flex items-center justify-between mt-6">
+                <div class="flex items-center space-x-4">
+                  <label class="flex items-center space-x-2">
+                    <input type="checkbox" class="text-purple-500 bg-transparent border-white/20 rounded">
+                    <span class="text-sm">Include Arabic translation</span>
+                  </label>
+                  <label class="flex items-center space-x-2">
+                    <input type="checkbox" class="text-purple-500 bg-transparent border-white/20 rounded">
+                    <span class="text-sm">Use formal tone</span>
+                  </label>
+                </div>
+                <button onclick="generateMessage()" class="btn-gradient px-8 py-3 rounded-lg font-semibold">
+                  <i class="fas fa-magic mr-2"></i>Generate Message
+                </button>
+              </div>
+            </div>
+            
+            <!-- Generated Message Display -->
+            <div id="generatedMessage" class="module-card rounded-xl p-6" style="display: none;">
+              <h3 class="text-lg font-bold mb-4">Generated Message</h3>
+              <div class="glass-card rounded-lg p-4 mb-4">
+                <div id="messageContent" class="text-gray-300"></div>
+              </div>
+              
+              <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                  <button class="glass-card px-4 py-2 rounded-lg border border-white/20">
+                    <i class="fas fa-copy mr-2"></i>Copy
+                  </button>
+                  <button class="glass-card px-4 py-2 rounded-lg border border-white/20">
+                    <i class="fas fa-edit mr-2"></i>Edit
+                  </button>
+                  <button class="glass-card px-4 py-2 rounded-lg border border-white/20">
+                    <i class="fas fa-save mr-2"></i>Save Template
+                  </button>
+                </div>
+                <button class="btn-gradient px-6 py-2 rounded-lg font-semibold">
+                  <i class="fas fa-paper-plane mr-2"></i>Use in Campaign
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Analytics Tab -->
+        <div id="analytics" class="tab-content">
+          <div class="glass-card rounded-xl p-6" data-aos="fade-up">
+            <h2 class="text-2xl font-bold text-glow mb-4">Analytics Dashboard</h2>
+            <p class="text-gray-300 mb-6">Comprehensive insights into your LinkedIn automation performance</p>
+            
+            <!-- Analytics coming soon placeholder -->
+            <div class="text-center py-12">
+              <i class="fas fa-chart-bar text-6xl text-purple-400 mb-4 opacity-50"></i>
+              <h3 class="text-xl font-bold mb-2">Advanced Analytics Coming Soon</h3>
+              <p class="text-gray-400">Detailed performance metrics, ROI tracking, and predictive insights</p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Profile Manager Tab -->
+        <div id="profiles" class="tab-content">
+          <div class="glass-card rounded-xl p-6" data-aos="fade-up">
+            <h2 class="text-2xl font-bold text-glow mb-4">Profile Manager</h2>
+            <p class="text-gray-300 mb-6">Manage multiple LinkedIn profiles and account settings</p>
+            
+            <!-- Profile manager coming soon placeholder -->
+            <div class="text-center py-12">
+              <i class="fas fa-user-cog text-6xl text-purple-400 mb-4 opacity-50"></i>
+              <h3 class="text-xl font-bold mb-2">Multi-Profile Management Coming Soon</h3>
+              <p class="text-gray-400">Manage multiple LinkedIn accounts with advanced switching capabilities</p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Settings Tab -->
+        <div id="settings" class="tab-content">
+          <div class="glass-card rounded-xl p-6" data-aos="fade-up">
+            <h2 class="text-2xl font-bold text-glow mb-4">Settings</h2>
+            <p class="text-gray-300 mb-6">Configure your automation preferences and account settings</p>
+            
+            <!-- Settings coming soon placeholder -->
+            <div class="text-center py-12">
+              <i class="fas fa-cog text-6xl text-purple-400 mb-4 opacity-50"></i>
+              <h3 class="text-xl font-bold mb-2">Advanced Settings Coming Soon</h3>
+              <p class="text-gray-400">Comprehensive configuration options for optimal automation</p>
+            </div>
+          </div>
+        </div>
+        
       </div>
     </div>
-
-    <!-- Create Campaign Modal -->
-    <div
-      id="campaign-modal"
-      class="fixed inset-0 bg-black bg-opacity-50 hidden z-50"
-    >
-      <div class="flex items-center justify-center min-h-screen px-4">
-        <div class="bg-white rounded-xl p-8 max-w-md w-full">
-          <div class="flex items-center justify-between mb-6">
-            <h3 class="text-xl font-semibold text-gray-800">
-              Create New Campaign
-            </h3>
-            <button id="close-modal" class="text-gray-500 hover:text-gray-700">
-              <i class="fas fa-times"></i>
-            </button>
-          </div>
-
-          <form id="campaign-form" class="space-y-4">
-            <div>
-              <label class="block text-sm font-medium text-gray-700 mb-2"
-                >Campaign Name</label
-              >
-              <input
-                type="text"
-                id="campaign-name"
-                class="w-full border border-gray-300 rounded-lg px-3 py-2"
-                required
-              />
-            </div>
-
-            <div>
-              <label class="block text-sm font-medium text-gray-700 mb-2"
-                >Target Industry</label
-              >
-              <select
-                id="target-industry"
-                class="w-full border border-gray-300 rounded-lg px-3 py-2"
-              >
-                <option value="healthcare">Healthcare</option>
-                <option value="technology">Technology</option>
-                <option value="finance">Finance</option>
-                <option value="education">Education</option>
-              </select>
-            </div>
-
-            <div>
-              <label class="block text-sm font-medium text-gray-700 mb-2"
-                >Message Template</label
-              >
-              <textarea
-                id="message-template"
-                rows="4"
-                class="w-full border border-gray-300 rounded-lg px-3 py-2"
-                placeholder="Hi {firstName}, I noticed your work in {industry}..."
-              ></textarea>
-            </div>
-
-            <div class="flex space-x-4">
-              <button
-                type="button"
-                id="cancel-campaign"
-                class="flex-1 bg-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-400 transition-colors"
-              >
-                Cancel
-              </button>
-              <button
-                type="submit"
-                class="flex-1 bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors"
-              >
-                Create Campaign
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-
-    <script src="dashboard.js"></script>
+    
+    <script>
+      // Initialize AOS animations
+      AOS.init({
+        duration: 800,
+        easing: 'ease-in-out',
+        once: true
+      });
+      
+      // Tab switching functionality
+      function showTab(tabId) {
+        // Hide all tab contents
+        document.querySelectorAll('.tab-content').forEach(tab => {
+          tab.classList.remove('active');
+        });
+        
+        // Remove active class from all nav items
+        document.querySelectorAll('.nav-item').forEach(item => {
+          item.classList.remove('active');
+        });
+        
+        // Show selected tab
+        document.getElementById(tabId).classList.add('active');
+        
+        // Add active class to clicked nav item
+        event.target.classList.add('active');
+      }
+      
+      // Message type selection
+      function selectMessageType(type) {
+        document.querySelectorAll('.message-type-btn').forEach(btn => {
+          btn.classList.remove('active');
+        });
+        event.target.closest('.message-type-btn').classList.add('active');
+      }
+      
+      // Generate AI message
+      function generateMessage() {
+        const messageDiv = document.getElementById('generatedMessage');
+        const contentDiv = document.getElementById('messageContent');
+        
+        // Simulate AI generation with loading
+        contentDiv.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating personalized message...';
+        messageDiv.style.display = 'block';
+        
+        setTimeout(() => {
+          contentDiv.innerHTML = `
+            <strong>Subject:</strong> Connecting healthcare innovation in the UAE<br><br>
+            <strong>Message:</strong><br>
+            Hi [Name],<br><br>
+            I noticed your impressive work in [Specialization] at [Company]. As someone passionate about advancing healthcare technology in the MENA region, I'd love to connect and explore potential collaboration opportunities.<br><br>
+            Our platform has been helping healthcare professionals streamline their operations and improve patient outcomes across the UAE. I believe there might be valuable synergies between our work.<br><br>
+            Would you be open to a brief conversation about the latest trends in healthcare innovation?<br><br>
+            Best regards,<br>
+            [Your Name]
+          `;
+        }, 2000);
+      }
+      
+      // Initialize performance chart
+      const ctx = document.getElementById('performanceChart').getContext('2d');
+      new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+          datasets: [
+            {
+              label: 'Connections',
+              data: [12, 19, 15, 25, 22, 18, 24],
+              borderColor: '#8B5CF6',
+              backgroundColor: 'rgba(139, 92, 246, 0.1)',
+              tension: 0.4
+            },
+            {
+              label: 'Messages',
+              data: [8, 12, 10, 18, 15, 12, 16],
+              borderColor: '#06B6D4',
+              backgroundColor: 'rgba(6, 182, 212, 0.1)',
+              tension: 0.4
+            },
+            {
+              label: 'Responses',
+              data: [3, 5, 4, 8, 6, 5, 7],
+              borderColor: '#10B981',
+              backgroundColor: 'rgba(16, 185, 129, 0.1)',
+              tension: 0.4
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              labels: {
+                color: '#E5E7EB'
+              }
+            }
+          },
+          scales: {
+            x: {
+              ticks: {
+                color: '#9CA3AF'
+              },
+              grid: {
+                color: 'rgba(255, 255, 255, 0.1)'
+              }
+            },
+            y: {
+              ticks: {
+                color: '#9CA3AF'
+              },
+              grid: {
+                color: 'rgba(255, 255, 255, 0.1)'
+              }
+            }
+          }
+        }
+      });
+    </script>
   </body>
 </html>

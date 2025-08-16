@@ -141,6 +141,7 @@ curl https://your-worker.your-subdomain.workers.dev/health
 ```
 
 Expected response:
+
 ```json
 {
   "status": "healthy",
@@ -211,12 +212,14 @@ The platform includes built-in monitoring:
 ### Common Issues
 
 **1. KV Namespace Not Found**
+
 ```bash
 # Verify KV namespace binding
 wrangler kv:namespace list
 ```
 
 **2. D1 Database Connection Error**
+
 ```bash
 # Check D1 database status
 wrangler d1 list
@@ -224,12 +227,14 @@ wrangler d1 info brainsait-db
 ```
 
 **3. AI API Errors**
+
 ```bash
 # Verify API keys are set
 wrangler secret list
 ```
 
 **4. LinkedIn Authentication Issues**
+
 - Ensure credentials are correct
 - Check for 2FA requirements
 - Verify account permissions
@@ -271,6 +276,7 @@ route = "your-domain.com/*"
 ### SSL/TLS Setup
 
 Cloudflare automatically handles SSL/TLS for:
+
 - `*.workers.dev` subdomains
 - Custom domains with proper DNS setup
 
@@ -332,7 +338,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: "18"
       - run: npm install
       - run: npm test
       - uses: cloudflare/wrangler-action@v3
@@ -400,7 +406,7 @@ mode = "smart"
 ```javascript
 // Auto-detect user region
 const country = request.cf.country;
-const language = country === 'SA' ? 'ar' : 'en';
+const language = country === "SA" ? "ar" : "en";
 ```
 
 ## 🎯 Healthcare Compliance
