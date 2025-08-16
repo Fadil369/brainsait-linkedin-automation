@@ -24,8 +24,8 @@
       
       .glass-card {
         background: rgba(255, 255, 255, 0.05);
-        backdrop-filter: blur(20px);
         -webkit-backdrop-filter: blur(20px);
+        backdrop-filter: blur(20px);
         border: 1px solid rgba(255, 255, 255, 0.1);
         box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
         transition: all 0.3s ease;
@@ -86,8 +86,8 @@
       
       .module-card {
         background: rgba(255, 255, 255, 0.03);
-        backdrop-filter: blur(15px);
         -webkit-backdrop-filter: blur(15px);
+        backdrop-filter: blur(15px);
         border: 1px solid rgba(255, 255, 255, 0.08);
         transition: all 0.3s ease;
       }
@@ -114,8 +114,8 @@
       
       .stat-card {
         background: rgba(255, 255, 255, 0.03);
-        backdrop-filter: blur(15px);
         -webkit-backdrop-filter: blur(15px);
+        backdrop-filter: blur(15px);
         border: 1px solid rgba(255, 255, 255, 0.08);
         transition: all 0.3s ease;
       }
@@ -132,6 +132,11 @@
         border-color: #667eea;
         box-shadow: 0 0 20px rgba(102, 126, 234, 0.4);
       }
+      .progress-12 { width: 12%; }
+.progress-45 { width: 45%; }
+.progress-73 { width: 73%; }
+.hidden { display: none; }
+
     </style>
   </head>
   
@@ -297,7 +302,7 @@
                     <span class="text-green-400 text-sm">Running</span>
                   </div>
                   <div class="w-full bg-gray-700 rounded-full h-2 mb-2">
-                    <div class="progress-bar h-2 rounded-full" style="width: 73%"></div>
+                    <div class="progress-bar h-2 rounded-full progress-73"></div>
                   </div>
                   <div class="flex justify-between text-sm text-gray-400">
                     <span>Progress: 73%</span>
@@ -311,7 +316,7 @@
                     <span class="text-yellow-400 text-sm">Scheduled</span>
                   </div>
                   <div class="w-full bg-gray-700 rounded-full h-2 mb-2">
-                    <div class="progress-bar h-2 rounded-full" style="width: 45%"></div>
+                    <div class="progress-bar h-2 rounded-full progress-45"></div>
                   </div>
                   <div class="flex justify-between text-sm text-gray-400">
                     <span>Progress: 45%</span>
@@ -325,7 +330,7 @@
                     <span class="text-blue-400 text-sm">Pending</span>
                   </div>
                   <div class="w-full bg-gray-700 rounded-full h-2 mb-2">
-                    <div class="progress-bar h-2 rounded-full" style="width: 12%"></div>
+                    <div class="progress-bar h-2 rounded-full progress-12"></div>
                   </div>
                   <div class="flex justify-between text-sm text-gray-400">
                     <span>Progress: 12%</span>
@@ -758,7 +763,7 @@
                 </div>
                 
                 <div class="w-full bg-gray-700 rounded-full h-2">
-                  <div class="progress-bar h-2 rounded-full" style="width: 73%"></div>
+                  <div class="progress-bar h-2 rounded-full progress-73"></div>
                 </div>
                 <div class="flex justify-between text-sm text-gray-400 mt-2">
                   <span>Progress: 73%</span>
@@ -803,7 +808,7 @@
                 </div>
                 
                 <div class="w-full bg-gray-700 rounded-full h-2">
-                  <div class="progress-bar h-2 rounded-full" style="width: 45%"></div>
+                  <div class="progress-bar h-2 rounded-full progress-45"></div>
                 </div>
                 <div class="flex justify-between text-sm text-gray-400 mt-2">
                   <span>Progress: 45%</span>
@@ -822,19 +827,19 @@
             
             <!-- Message Type Selection -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-              <button onclick="selectMessageType('connection')" class="message-type-btn active module-card rounded-xl p-6 text-center transition-all duration-200">
+              <button onclick="selectMessageType(event, 'connection')" class="message-type-btn active module-card rounded-xl p-6 text-center transition-all duration-200">
                 <i class="fas fa-user-plus text-2xl mb-3 text-purple-400"></i>
                 <h3 class="font-bold mb-2">Connection Request</h3>
                 <p class="text-sm text-gray-400">Personalized connection request messages</p>
               </button>
               
-              <button onclick="selectMessageType('followup')" class="message-type-btn module-card rounded-xl p-6 text-center transition-all duration-200">
+              <button onclick="selectMessageType(event, 'followup')" class="message-type-btn module-card rounded-xl p-6 text-center transition-all duration-200">
                 <i class="fas fa-paper-plane text-2xl mb-3 text-blue-400"></i>
                 <h3 class="font-bold mb-2">Follow-up Message</h3>
                 <p class="text-sm text-gray-400">Engaging follow-up sequences</p>
               </button>
               
-              <button onclick="selectMessageType('nurture')" class="message-type-btn module-card rounded-xl p-6 text-center transition-all duration-200">
+              <button onclick="selectMessageType(event, 'nurture')" class="message-type-btn module-card rounded-xl p-6 text-center transition-all duration-200">
                 <i class="fas fa-heart text-2xl mb-3 text-red-400"></i>
                 <h3 class="font-bold mb-2">Lead Nurturing</h3>
                 <p class="text-sm text-gray-400">Value-driven nurturing content</p>
@@ -847,8 +852,8 @@
               
               <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <label class="block text-sm font-medium mb-2">Target Profession</label>
-                  <select class="w-full glass-card px-4 py-3 rounded-lg border border-white/20 bg-transparent">
+                  <label for="targetProfession" class="block text-sm font-medium mb-2">Target Profession</label>
+                  <select id="targetProfession" class="w-full glass-card px-4 py-3 rounded-lg border border-white/20 bg-transparent">
                     <option>Healthcare Professional</option>
                     <option>Medical Device Sales</option>
                     <option>Pharmaceutical</option>
@@ -858,8 +863,8 @@
                 </div>
                 
                 <div>
-                  <label class="block text-sm font-medium mb-2">Region/Location</label>
-                  <select class="w-full glass-card px-4 py-3 rounded-lg border border-white/20 bg-transparent">
+                  <label for="region" class="block text-sm font-medium mb-2">Region/Location</label>
+                  <select id="region" class="w-full glass-card px-4 py-3 rounded-lg border border-white/20 bg-transparent">
                     <option>UAE</option>
                     <option>Saudi Arabia</option>
                     <option>Qatar</option>
@@ -869,19 +874,19 @@
                 </div>
                 
                 <div>
-                  <label class="block text-sm font-medium mb-2">Company/Organization</label>
-                  <input type="text" placeholder="e.g., Dubai Healthcare City" class="w-full glass-card px-4 py-3 rounded-lg border border-white/20 bg-transparent">
+                  <label for="company" class="block text-sm font-medium mb-2">Company/Organization</label>
+                  <input id="company" type="text" placeholder="e.g., Dubai Healthcare City" class="w-full glass-card px-4 py-3 rounded-lg border border-white/20 bg-transparent">
                 </div>
                 
                 <div>
-                  <label class="block text-sm font-medium mb-2">Specialization</label>
-                  <input type="text" placeholder="e.g., Cardiology, Oncology" class="w-full glass-card px-4 py-3 rounded-lg border border-white/20 bg-transparent">
+                  <label for="specialization" class="block text-sm font-medium mb-2">Specialization</label>
+                  <input id="specialization" type="text" placeholder="e.g., Cardiology, Oncology" class="w-full glass-card px-4 py-3 rounded-lg border border-white/20 bg-transparent">
                 </div>
               </div>
               
               <div class="mt-6">
-                <label class="block text-sm font-medium mb-2">Additional Context (Optional)</label>
-                <textarea placeholder="Any specific details about the prospect or your offering..." class="w-full glass-card px-4 py-3 rounded-lg border border-white/20 bg-transparent h-24 resize-none"></textarea>
+                <label for="additionalContext" class="block text-sm font-medium mb-2">Additional Context (Optional)</label>
+                <textarea id="additionalContext" placeholder="Any specific details about the prospect or your offering..." class="w-full glass-card px-4 py-3 rounded-lg border border-white/20 bg-transparent h-24 resize-none"></textarea>
               </div>
               
               <div class="flex items-center justify-between mt-6">
@@ -902,7 +907,7 @@
             </div>
             
             <!-- Generated Message Display -->
-            <div id="generatedMessage" class="module-card rounded-xl p-6" style="display: none;">
+            <div id="generatedMessage" class="module-card rounded-xl p-6 hidden">
               <h3 class="text-lg font-bold mb-4">Generated Message</h3>
               <div class="glass-card rounded-lg p-4 mb-4">
                 <div id="messageContent" class="text-gray-300"></div>
@@ -986,57 +991,55 @@
       
       // Tab switching functionality
       function showTab(tabId) {
-        // Hide all tab contents
-        document.querySelectorAll('.tab-content').forEach(tab => {
-          tab.classList.remove('active');
-        });
-        
-        // Remove active class from all nav items
-        document.querySelectorAll('.nav-item').forEach(item => {
-          item.classList.remove('active');
-        });
-        
-        // Show selected tab
-        document.getElementById(tabId).classList.add('active');
-        
-        // Add active class to clicked nav item
-        event.target.classList.add('active');
+        document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+        document.getElementById(tabId)?.classList.add('active');
+        document.querySelectorAll('.nav-item').forEach(btn => btn.classList.remove('active'));
+        const buttons = Array.from(document.querySelectorAll('.nav-item'));
+        const map = { dashboard: 0, automation: 1, contacts: 2, campaigns: 3, content: 4, analytics: 5, profiles: 6, settings: 7 };
+        const idx = map[tabId];
+        if (idx !== undefined && buttons[idx]) buttons[idx].classList.add('active');
       }
       
       // Message type selection
-      function selectMessageType(type) {
+  function selectMessageType(event, type) {
         document.querySelectorAll('.message-type-btn').forEach(btn => {
           btn.classList.remove('active');
         });
         event.target.closest('.message-type-btn').classList.add('active');
       }
       
-      // Generate AI message
-      function generateMessage() {
+      // Call health endpoint to verify integration
+      (async function checkHealth(){
+        try {
+          const res = await fetch('/api/health');
+          const data = await res.json();
+          console.debug('Health:', data);
+        } catch(e){ console.warn('Health check failed', e); }
+      })();
+      
+      // Wire AI message generation to backend API
+      async function generateMessage() {
         const messageDiv = document.getElementById('generatedMessage');
         const contentDiv = document.getElementById('messageContent');
-        
-        // Simulate AI generation with loading
         contentDiv.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating personalized message...';
-        messageDiv.style.display = 'block';
-        
-        setTimeout(() => {
-          contentDiv.innerHTML = `
-            <strong>Subject:</strong> Connecting healthcare innovation in the UAE<br><br>
-            <strong>Message:</strong><br>
-            Hi [Name],<br><br>
-            I noticed your impressive work in [Specialization] at [Company]. As someone passionate about advancing healthcare technology in the MENA region, I'd love to connect and explore potential collaboration opportunities.<br><br>
-            Our platform has been helping healthcare professionals streamline their operations and improve patient outcomes across the UAE. I believe there might be valuable synergies between our work.<br><br>
-            Would you be open to a brief conversation about the latest trends in healthcare innovation?<br><br>
-            Best regards,<br>
-            [Your Name]
-          `;
-        }, 2000);
+        messageDiv.classList.remove('hidden');
+        try {
+          const payload = { profileData: { firstName: 'Prospect', industry: 'Healthcare', field: 'Medical Technology' }, messageType: 'connection', language: 'en' };
+          const res = await fetch('/api/messages/generate', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+          const data = await res.json();
+          if (data.success) {
+            contentDiv.textContent = data.message;
+          } else {
+            contentDiv.textContent = 'Failed to generate message: ' + (data.error || 'Unknown error');
+          }
+        } catch (e) {
+          contentDiv.textContent = 'Error calling API: ' + e.message;
+        }
       }
       
       // Initialize performance chart
-      const ctx = document.getElementById('performanceChart').getContext('2d');
-      new Chart(ctx, {
+  const ctx = document.getElementById('performanceChart').getContext('2d');
+  window.performanceChart = new Chart(ctx, {
         type: 'line',
         data: {
           labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
