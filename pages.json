@@ -1,0 +1,10 @@
+{
+  "name": "brainsait-linkedin-dashboard",
+  "build": {
+    "command": "echo 'Static deployment'",
+    "destination": "src/pages"
+  },
+  "functions": {
+    "directory": "src/workers"
+  }
+}

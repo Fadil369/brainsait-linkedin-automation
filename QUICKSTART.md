@@ -54,12 +54,12 @@ wrangler login
 
 Save **$3,500+/year** compared to commercial solutions:
 
-| Feature | Commercial Tools | BrainSAIT | Savings |
-|---------|------------------|-----------|---------|
-| 3 Accounts | $297/month | $20/month | $277/month |
-| Unlimited Accounts | $500+/month | $20/month | $480+/month |
-| Custom AI | Not Available | Included | Priceless |
-| Healthcare Features | Limited | Full Suite | Priceless |
+| Feature             | Commercial Tools | BrainSAIT  | Savings     |
+| ------------------- | ---------------- | ---------- | ----------- |
+| 3 Accounts          | $297/month       | $20/month  | $277/month  |
+| Unlimited Accounts  | $500+/month      | $20/month  | $480+/month |
+| Custom AI           | Not Available    | Included   | Priceless   |
+| Healthcare Features | Limited          | Full Suite | Priceless   |
 
 ## 🏥 Healthcare Compliance
 
@@ -96,18 +96,21 @@ Access your dashboard at: `https://your-domain.pages.dev`
 ## 🚀 Deployment Options
 
 ### Cloudflare Workers & Pages (Recommended)
+
 - Global edge deployment
 - Automatic scaling
 - Built-in CDN
 - Cost-effective
 
 ### Docker Compose (Local/VPS)
+
 - Complete control
 - Custom infrastructure
 - Private deployment
 - Development environment
 
 ### Kubernetes (Enterprise)
+
 - High availability
 - Auto-scaling
 - Load balancing
@@ -116,11 +119,13 @@ Access your dashboard at: `https://your-domain.pages.dev`
 ## 📱 API Endpoints
 
 ### Health Check
+
 ```bash
 GET /health
 ```
 
 ### Campaign Management
+
 ```bash
 POST /api/v1/campaigns     # Create campaign
 GET /api/v1/campaigns      # List campaigns
@@ -128,6 +133,7 @@ PUT /api/v1/campaigns/:id  # Update campaign
 ```
 
 ### Message Generation
+
 ```bash
 POST /api/v1/messages/generate
 {
@@ -138,6 +144,7 @@ POST /api/v1/messages/generate
 ```
 
 ### Analytics
+
 ```bash
 GET /api/v1/analytics/24h  # 24 hour metrics
 GET /api/v1/analytics/7d   # 7 day metrics
@@ -147,7 +154,9 @@ GET /api/v1/analytics/30d  # 30 day metrics
 ## 🔧 Configuration
 
 ### LinkedIn Accounts
+
 Edit `config/accounts.json`:
+
 ```json
 {
   "accounts": [
@@ -165,7 +174,9 @@ Edit `config/accounts.json`:
 ```
 
 ### AI Configuration
+
 Edit `config/ai.json`:
+
 ```json
 {
   "providers": {
@@ -199,4 +210,4 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 **Built with ❤️ by [BrainSAIT](https://brainsait.com) for the healthcare community**
 
-*Ready to revolutionize your LinkedIn automation? Let's build the future together! 🚀*
+_Ready to revolutionize your LinkedIn automation? Let's build the future together! 🚀_

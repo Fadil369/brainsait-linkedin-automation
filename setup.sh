@@ -34,44 +34,44 @@ print_info() {
 # Check prerequisites
 check_prerequisites() {
     print_info "Checking prerequisites..."
-    
+
     # Check Node.js
     if ! command -v node &> /dev/null; then
         print_error "Node.js is not installed. Please install Node.js 18+ first."
         exit 1
     fi
-    
+
     node_version=$(node -v | sed 's/v//')
     if [[ "$(printf '%s\n' "18.0.0" "$node_version" | sort -V | head -n1)" != "18.0.0" ]]; then
         print_error "Node.js version 18+ is required. Current version: $node_version"
         exit 1
     fi
-    
+
     # Check npm
     if ! command -v npm &> /dev/null; then
         print_error "npm is not installed."
         exit 1
     fi
-    
+
     # Check git
     if ! command -v git &> /dev/null; then
         print_error "Git is not installed."
         exit 1
     fi
-    
+
     print_status "Prerequisites check passed"
 }
 
 # Setup environment
 setup_environment() {
     print_info "Setting up environment..."
-    
+
     # Copy environment file if it doesn't exist
     if [ ! -f .env ]; then
         cp .env.example .env
         print_warning "Created .env file from .env.example. Please update with your credentials."
     fi
-    
+
     # Create necessary directories
     mkdir -p sessions profiles data logs
     print_status "Created necessary directories"
@@ -80,10 +80,10 @@ setup_environment() {
 # Install dependencies
 install_dependencies() {
     print_info "Installing dependencies..."
-    
+
     npm install
     print_status "Dependencies installed successfully"
-    
+
     # Install Playwright browsers
     npx playwright install chromium
     print_status "Playwright browsers installed"
@@ -92,16 +92,16 @@ install_dependencies() {
 # Setup Cloudflare
 setup_cloudflare() {
     print_info "Setting up Cloudflare Workers..."
-    
+
     # Check if wrangler is installed
     if ! command -v wrangler &> /dev/null; then
         print_info "Installing Wrangler CLI..."
         npm install -g wrangler
     fi
-    
+
     print_warning "Please run 'wrangler login' to authenticate with Cloudflare"
     print_warning "Then update wrangler.toml with your account details"
-    
+
     print_status "Cloudflare setup instructions provided"
 }
 
@@ -109,7 +109,7 @@ setup_cloudflare() {
 setup_docker() {
     if command -v docker &> /dev/null; then
         print_info "Docker detected. Setting up containers..."
-        
+
         # Create docker environment file
         if [ ! -f .env.docker ]; then
             cat > .env.docker << EOF
@@ -122,7 +122,7 @@ ANTHROPIC_API_KEY=your_anthropic_key_here
 EOF
             print_warning "Created .env.docker file. Please update with your credentials."
         fi
-        
+
         print_status "Docker setup completed"
     else
         print_warning "Docker not found. Skipping Docker setup."
@@ -132,23 +132,23 @@ EOF
 # Create initial configuration
 create_initial_config() {
     print_info "Creating initial configuration..."
-    
+
     # Ensure config files exist
     if [ ! -f config/accounts.json ]; then
         print_warning "accounts.json already exists. Review the example configuration."
     fi
-    
+
     if [ ! -f config/ai.json ]; then
         print_warning "ai.json already exists. Review the AI configuration."
     fi
-    
+
     print_status "Configuration files verified"
 }
 
 # Development server setup
 setup_dev_server() {
     print_info "Setting up development server..."
-    
+
     # Create a simple development script
     cat > dev.sh << 'EOF'
 #!/bin/bash
@@ -163,16 +163,16 @@ fi
 # Start the development server
 npm run dev
 EOF
-    
+
     chmod +x dev.sh
-    
+
     print_status "Development server script created (./dev.sh)"
 }
 
 # Cloudflare deployment preparation
 prepare_cloudflare_deployment() {
     print_info "Preparing Cloudflare deployment..."
-    
+
     # Create deployment script
     cat > deploy.sh << 'EOF'
 #!/bin/bash
@@ -197,16 +197,16 @@ echo "✅ Deployment completed!"
 echo "📊 Dashboard: https://your-pages-url.pages.dev"
 echo "🔗 API: https://your-worker.your-subdomain.workers.dev"
 EOF
-    
+
     chmod +x deploy.sh
-    
+
     print_status "Deployment script created (./deploy.sh)"
 }
 
 # Security setup
 setup_security() {
     print_info "Setting up security measures..."
-    
+
     # Create .env template with security notes
     if [ ! -f .env.security-notes ]; then
         cat > .env.security-notes << 'EOF'
@@ -244,25 +244,25 @@ EOF
 # Final setup verification
 verify_setup() {
     print_info "Verifying setup..."
-    
+
     # Check if all required files exist
     required_files=(".env" "package.json" "src/index.js" "wrangler.toml")
-    
+
     for file in "${required_files[@]}"; do
         if [ ! -f "$file" ]; then
             print_error "Required file missing: $file"
             exit 1
         fi
     done
-    
+
     print_status "All required files present"
-    
+
     # Check if dependencies are installed
     if [ ! -d "node_modules" ]; then
         print_error "Dependencies not installed. Run 'npm install'"
         exit 1
     fi
-    
+
     print_status "Dependencies verified"
 }
 
@@ -271,7 +271,7 @@ main() {
     echo "🧠 BrainSAIT LinkedIn Automation Platform Setup"
     echo "============================================="
     echo ""
-    
+
     check_prerequisites
     setup_environment
     install_dependencies
@@ -282,7 +282,7 @@ main() {
     prepare_cloudflare_deployment
     setup_security
     verify_setup
-    
+
     echo ""
     echo "🎉 Setup completed successfully!"
     echo ""

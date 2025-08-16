@@ -1,8 +1,8 @@
-version: '3.8'
+version: "3.8"
 
 services:
   linkedin-engine:
-    build: 
+    build:
       context: .
       dockerfile: Dockerfile
     container_name: brainsait-linkedin-automation
@@ -29,10 +29,10 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '2'
+          cpus: "2"
           memory: 4G
         reservations:
-          cpus: '1'
+          cpus: "1"
           memory: 2G
 
   mongo:

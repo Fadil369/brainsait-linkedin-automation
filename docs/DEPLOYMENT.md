@@ -26,7 +26,7 @@ wrangler kv:namespace create "SESSIONS"
 wrangler kv:namespace create "SESSIONS" --preview
 
 # Create KV namespaces for analytics
-wrangler kv:namespace create "ANALYTICS"  
+wrangler kv:namespace create "ANALYTICS"
 wrangler kv:namespace create "ANALYTICS" --preview
 ```
 
@@ -40,7 +40,7 @@ Set up your environment variables in Cloudflare:
 # Set OpenAI API key
 wrangler secret put OPENAI_API_KEY
 
-# Set Anthropic API key  
+# Set Anthropic API key
 wrangler secret put ANTHROPIC_API_KEY
 
 # Set LinkedIn credentials (if needed)
