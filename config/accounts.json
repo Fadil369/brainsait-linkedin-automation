@@ -1,0 +1,83 @@
+{
+  "accounts": [
+    {
+      "id": "example-account-1",
+      "name": "Dr. Sarah Al-Rashid",
+      "email": "sarah.alrashid@example.com",
+      "industry": "healthcare",
+      "region": "MENA",
+      "specialization": "cardiology",
+      "hospital": "King Faisal Specialist Hospital",
+      "dailyLimits": {
+        "connections": 15,
+        "messages": 20,
+        "profileViews": 40
+      },
+      "workingHours": {
+        "start": "09:00",
+        "end": "17:00",
+        "timezone": "Asia/Riyadh",
+        "breakTime": {
+          "start": "13:00",
+          "end": "14:00"
+        }
+      },
+      "preferences": {
+        "language": "en",
+        "messageStyle": "professional",
+        "targets": [
+          "healthcare administrators",
+          "medical directors",
+          "hospital executives",
+          "healthcare technology providers"
+        ]
+      },
+      "status": "active",
+      "createdAt": "2024-08-16T00:00:00.000Z",
+      "lastActivity": null
+    }
+  ],
+  "globalSettings": {
+    "maxConcurrentAccounts": 5,
+    "defaultDailyLimits": {
+      "connections": 20,
+      "messages": 25,
+      "profileViews": 50,
+      "contentEngagement": 30
+    },
+    "safetySettings": {
+      "enableDelayRandomization": true,
+      "minDelayBetweenActions": 30000,
+      "maxDelayBetweenActions": 300000,
+      "enableWeekendPause": true,
+      "enableHolidayPause": true,
+      "restrictionDetection": true,
+      "autoRotateProxies": true
+    },
+    "healthcareCompliance": {
+      "enableHIPAAMode": true,
+      "auditLogging": true,
+      "dataRetentionDays": 365,
+      "enableEncryption": true,
+      "requireMedicalVerification": true
+    },
+    "regionSettings": {
+      "primaryRegion": "MENA",
+      "supportedLanguages": ["en", "ar"],
+      "businessHours": {
+        "sunday": { "start": "09:00", "end": "17:00" },
+        "monday": { "start": "09:00", "end": "17:00" },
+        "tuesday": { "start": "09:00", "end": "17:00" },
+        "wednesday": { "start": "09:00", "end": "17:00" },
+        "thursday": { "start": "09:00", "end": "17:00" },
+        "friday": { "closed": true },
+        "saturday": { "closed": true }
+      },
+      "holidays": [
+        "2024-09-16", // Saudi National Day
+        "2024-04-09", // Eid al-Fitr (example)
+        "2024-06-16"  // Eid al-Adha (example)
+      ]
+    }
+  }
+}

@@ -1,0 +1,171 @@
+{
+  "providers": {
+    "openai": {
+      "enabled": true,
+      "model": "gpt-4",
+      "temperature": 0.7,
+      "maxTokens": 150,
+      "topP": 1,
+      "frequencyPenalty": 0,
+      "presencePenalty": 0,
+      "apiEndpoint": "https://api.openai.com/v1/chat/completions",
+      "rateLimits": {
+        "requestsPerMinute": 60,
+        "tokensPerMinute": 40000
+      }
+    },
+    "anthropic": {
+      "enabled": true,
+      "model": "claude-3-sonnet-20240229",
+      "temperature": 0.7,
+      "maxTokens": 150,
+      "apiEndpoint": "https://api.anthropic.com/v1/messages",
+      "rateLimits": {
+        "requestsPerMinute": 50,
+        "tokensPerMinute": 30000
+      }
+    },
+    "cloudflare": {
+      "enabled": true,
+      "model": "@cf/meta/llama-2-7b-chat-int8",
+      "fallbackModels": [
+        "@cf/microsoft/dialoGPT-medium",
+        "@cf/huggingface/CodeBERTa-small-v1"
+      ],
+      "rateLimits": {
+        "requestsPerMinute": 100
+      }
+    }
+  },
+  "messageGeneration": {
+    "connectionRequest": {
+      "maxLength": 300,
+      "tone": "professional",
+      "personalizations": [
+        "company",
+        "position",
+        "industry",
+        "education",
+        "mutual_connections",
+        "recent_activity"
+      ],
+      "templates": {
+        "healthcare_executive": "Hi {firstName}, I noticed your leadership role at {company} in {industry}. At BrainSAIT, we're developing AI solutions specifically for healthcare organizations in the {region} region. Would love to connect and share insights on digital transformation in healthcare.",
+        "medical_professional": "Hello Dr. {lastName}, I came across your profile and was impressed by your work in {specialization} at {hospital}. BrainSAIT is working on AI-powered healthcare solutions that could benefit {industry} professionals. I'd appreciate the opportunity to connect.",
+        "tech_healthcare": "Hi {firstName}, Your experience with {technology} in healthcare caught my attention. At BrainSAIT, we're at the intersection of AI and healthcare, developing solutions for the {region} market. Would be great to connect and exchange ideas.",
+        "general_healthcare": "Hello {firstName}, I see you're involved in {industry} at {company}. BrainSAIT specializes in AI-driven healthcare solutions, and I believe there might be valuable synergies between our work. Looking forward to connecting."
+      }
+    },
+    "followUp": {
+      "sequences": {
+        "day_3": {
+          "subject": "Healthcare AI insights for {company}",
+          "tone": "value-focused",
+          "maxLength": 500
+        },
+        "day_7": {
+          "subject": "Case study: AI implementation in {industry}",
+          "tone": "educational",
+          "maxLength": 600
+        },
+        "day_14": {
+          "subject": "Quick chat about {company}'s digital initiatives?",
+          "tone": "conversational",
+          "maxLength": 400
+        },
+        "day_21": {
+          "subject": "Last note on healthcare AI opportunities",
+          "tone": "friendly_closing",
+          "maxLength": 300
+        }
+      }
+    }
+  },
+  "languageSettings": {
+    "arabic": {
+      "enabled": true,
+      "useRegionalDialect": false,
+      "formalLevel": "business",
+      "rightToLeft": true,
+      "greetings": {
+        "formal": "السلام عليكم ورحمة الله وبركاته",
+        "business": "تحية طيبة",
+        "casual": "أهلاً وسهلاً"
+      },
+      "closings": {
+        "formal": "مع أطيب التحيات",
+        "business": "تقديري واحترامي",
+        "casual": "تحياتي"
+      }
+    },
+    "english": {
+      "variant": "international",
+      "formalLevel": "professional",
+      "culturalAdaptation": "middle_east"
+    }
+  },
+  "personalization": {
+    "dataPoints": [
+      "firstName",
+      "lastName",
+      "company",
+      "position",
+      "industry",
+      "location",
+      "education",
+      "experience",
+      "skills",
+      "certifications",
+      "publications",
+      "languages",
+      "interests",
+      "recentActivity",
+      "mutualConnections",
+      "groupMemberships"
+    ],
+    "priorityOrder": [
+      "company",
+      "position",
+      "industry",
+      "location",
+      "mutualConnections"
+    ],
+    "medicalVerification": {
+      "checkCredentials": true,
+      "verifyLicenses": true,
+      "validateEducation": true,
+      "checkPublications": true,
+      "scoringWeights": {
+        "credentials": 0.3,
+        "licenses": 0.25,
+        "education": 0.2,
+        "publications": 0.15,
+        "experience": 0.1
+      }
+    }
+  },
+  "qualityControl": {
+    "enableGrammarCheck": true,
+    "enableSpellCheck": true,
+    "enableToneAnalysis": true,
+    "enablePlagiarismCheck": true,
+    "enableCulturalSensitivity": true,
+    "minimumQualityScore": 0.8,
+    "humanReviewThreshold": 0.6
+  },
+  "analytics": {
+    "trackPerformance": true,
+    "a_bTesting": {
+      "enabled": true,
+      "testDuration": "7d",
+      "minSampleSize": 50,
+      "confidenceLevel": 0.95
+    },
+    "learningLoop": {
+      "enabled": true,
+      "updateFrequency": "weekly",
+      "adaptTemplates": true,
+      "optimizePersonalization": true
+    }
+  }
+}
