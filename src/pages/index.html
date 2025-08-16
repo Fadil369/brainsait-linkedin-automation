@@ -1,235 +1,314 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>BrainSAIT LinkedIn Automation Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
     <style>
-        .gradient-bg {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        }
-        .card {
-            backdrop-filter: blur(10px);
-            background: rgba(255, 255, 255, 0.95);
-        }
-        .rtl-support {
-            direction: rtl;
-            text-align: right;
-        }
+      .gradient-bg {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      }
+      .card {
+        backdrop-filter: blur(10px);
+        background: rgba(255, 255, 255, 0.95);
+      }
+      .rtl-support {
+        direction: rtl;
+        text-align: right;
+      }
     </style>
-</head>
-<body class="gradient-bg min-h-screen">
+  </head>
+  <body class="gradient-bg min-h-screen">
     <div class="container mx-auto px-4 py-8">
-        <!-- Header -->
-        <header class="mb-8">
-            <div class="flex items-center justify-between">
-                <div class="flex items-center space-x-4">
-                    <div class="bg-white rounded-full p-3 shadow-lg">
-                        <i class="fas fa-brain text-2xl text-indigo-600"></i>
-                    </div>
-                    <div>
-                        <h1 class="text-3xl font-bold text-white">BrainSAIT LinkedIn Automation</h1>
-                        <p class="text-indigo-100">Healthcare-Focused AI Platform</p>
-                    </div>
-                </div>
-                <div class="flex items-center space-x-4">
-                    <div class="bg-white rounded-lg px-4 py-2 shadow-lg">
-                        <span class="text-sm text-gray-600">Status:</span>
-                        <span id="system-status" class="font-semibold text-green-600">Online</span>
-                    </div>
-                    <div class="bg-white rounded-lg px-4 py-2 shadow-lg">
-                        <span class="text-sm text-gray-600">Time:</span>
-                        <span id="current-time" class="font-semibold text-gray-800"></span>
-                    </div>
-                </div>
+      <!-- Header -->
+      <header class="mb-8">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center space-x-4">
+            <div class="bg-white rounded-full p-3 shadow-lg">
+              <i class="fas fa-brain text-2xl text-indigo-600"></i>
             </div>
-        </header>
+            <div>
+              <h1 class="text-3xl font-bold text-white">
+                BrainSAIT LinkedIn Automation
+              </h1>
+              <p class="text-indigo-100">Healthcare-Focused AI Platform</p>
+            </div>
+          </div>
+          <div class="flex items-center space-x-4">
+            <div class="bg-white rounded-lg px-4 py-2 shadow-lg">
+              <span class="text-sm text-gray-600">Status:</span>
+              <span id="system-status" class="font-semibold text-green-600"
+                >Online</span
+              >
+            </div>
+            <div class="bg-white rounded-lg px-4 py-2 shadow-lg">
+              <span class="text-sm text-gray-600">Time:</span>
+              <span
+                id="current-time"
+                class="font-semibold text-gray-800"
+              ></span>
+            </div>
+          </div>
+        </div>
+      </header>
 
-        <!-- Key Metrics -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-            <div class="card rounded-xl p-6 shadow-xl">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <p class="text-sm text-gray-600 mb-1">Active Campaigns</p>
-                        <p id="active-campaigns" class="text-3xl font-bold text-indigo-600">0</p>
-                    </div>
-                    <div class="bg-indigo-100 rounded-full p-3">
-                        <i class="fas fa-bullhorn text-indigo-600"></i>
-                    </div>
-                </div>
-                <div class="mt-4">
-                    <span class="text-green-600 text-sm font-medium">
-                        <i class="fas fa-arrow-up"></i> 12%
-                    </span>
-                    <span class="text-gray-600 text-sm ml-2">vs last week</span>
-                </div>
+      <!-- Key Metrics -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div class="card rounded-xl p-6 shadow-xl">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-sm text-gray-600 mb-1">Active Campaigns</p>
+              <p
+                id="active-campaigns"
+                class="text-3xl font-bold text-indigo-600"
+              >
+                0
+              </p>
             </div>
-
-            <div class="card rounded-xl p-6 shadow-xl">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <p class="text-sm text-gray-600 mb-1">Messages Sent</p>
-                        <p id="messages-sent" class="text-3xl font-bold text-green-600">0</p>
-                    </div>
-                    <div class="bg-green-100 rounded-full p-3">
-                        <i class="fas fa-paper-plane text-green-600"></i>
-                    </div>
-                </div>
-                <div class="mt-4">
-                    <span class="text-green-600 text-sm font-medium">
-                        <i class="fas fa-arrow-up"></i> 8%
-                    </span>
-                    <span class="text-gray-600 text-sm ml-2">vs yesterday</span>
-                </div>
+            <div class="bg-indigo-100 rounded-full p-3">
+              <i class="fas fa-bullhorn text-indigo-600"></i>
             </div>
-
-            <div class="card rounded-xl p-6 shadow-xl">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <p class="text-sm text-gray-600 mb-1">Response Rate</p>
-                        <p id="response-rate" class="text-3xl font-bold text-yellow-600">0%</p>
-                    </div>
-                    <div class="bg-yellow-100 rounded-full p-3">
-                        <i class="fas fa-reply text-yellow-600"></i>
-                    </div>
-                </div>
-                <div class="mt-4">
-                    <span class="text-green-600 text-sm font-medium">
-                        <i class="fas fa-arrow-up"></i> 5%
-                    </span>
-                    <span class="text-gray-600 text-sm ml-2">vs last month</span>
-                </div>
-            </div>
-
-            <div class="card rounded-xl p-6 shadow-xl">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <p class="text-sm text-gray-600 mb-1">Leads Generated</p>
-                        <p id="leads-generated" class="text-3xl font-bold text-purple-600">0</p>
-                    </div>
-                    <div class="bg-purple-100 rounded-full p-3">
-                        <i class="fas fa-users text-purple-600"></i>
-                    </div>
-                </div>
-                <div class="mt-4">
-                    <span class="text-green-600 text-sm font-medium">
-                        <i class="fas fa-arrow-up"></i> 15%
-                    </span>
-                    <span class="text-gray-600 text-sm ml-2">vs last week</span>
-                </div>
-            </div>
+          </div>
+          <div class="mt-4">
+            <span class="text-green-600 text-sm font-medium">
+              <i class="fas fa-arrow-up"></i> 12%
+            </span>
+            <span class="text-gray-600 text-sm ml-2">vs last week</span>
+          </div>
         </div>
 
-        <!-- Charts and Analytics -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-            <!-- Message Performance Chart -->
-            <div class="card rounded-xl p-6 shadow-xl">
-                <h3 class="text-xl font-semibold text-gray-800 mb-4">Message Performance</h3>
-                <canvas id="messageChart" height="200"></canvas>
+        <div class="card rounded-xl p-6 shadow-xl">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-sm text-gray-600 mb-1">Messages Sent</p>
+              <p id="messages-sent" class="text-3xl font-bold text-green-600">
+                0
+              </p>
             </div>
-
-            <!-- Account Health -->
-            <div class="card rounded-xl p-6 shadow-xl">
-                <h3 class="text-xl font-semibold text-gray-800 mb-4">Account Health</h3>
-                <div id="account-health" class="space-y-4">
-                    <!-- Account health items will be populated here -->
-                </div>
+            <div class="bg-green-100 rounded-full p-3">
+              <i class="fas fa-paper-plane text-green-600"></i>
             </div>
+          </div>
+          <div class="mt-4">
+            <span class="text-green-600 text-sm font-medium">
+              <i class="fas fa-arrow-up"></i> 8%
+            </span>
+            <span class="text-gray-600 text-sm ml-2">vs yesterday</span>
+          </div>
         </div>
 
-        <!-- Campaign Management -->
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <!-- Active Campaigns -->
-            <div class="lg:col-span-2 card rounded-xl p-6 shadow-xl">
-                <div class="flex items-center justify-between mb-6">
-                    <h3 class="text-xl font-semibold text-gray-800">Active Campaigns</h3>
-                    <button id="create-campaign-btn" class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors">
-                        <i class="fas fa-plus mr-2"></i>Create Campaign
-                    </button>
-                </div>
-                <div id="campaigns-list" class="space-y-4">
-                    <!-- Campaigns will be populated here -->
-                </div>
+        <div class="card rounded-xl p-6 shadow-xl">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-sm text-gray-600 mb-1">Response Rate</p>
+              <p id="response-rate" class="text-3xl font-bold text-yellow-600">
+                0%
+              </p>
             </div>
-
-            <!-- Quick Actions -->
-            <div class="card rounded-xl p-6 shadow-xl">
-                <h3 class="text-xl font-semibold text-gray-800 mb-6">Quick Actions</h3>
-                <div class="space-y-4">
-                    <button class="w-full bg-green-600 text-white px-4 py-3 rounded-lg hover:bg-green-700 transition-colors">
-                        <i class="fas fa-play mr-2"></i>Start Automation
-                    </button>
-                    <button class="w-full bg-red-600 text-white px-4 py-3 rounded-lg hover:bg-red-700 transition-colors">
-                        <i class="fas fa-pause mr-2"></i>Pause All
-                    </button>
-                    <button class="w-full bg-blue-600 text-white px-4 py-3 rounded-lg hover:bg-blue-700 transition-colors">
-                        <i class="fas fa-download mr-2"></i>Export Data
-                    </button>
-                    <button class="w-full bg-purple-600 text-white px-4 py-3 rounded-lg hover:bg-purple-700 transition-colors">
-                        <i class="fas fa-robot mr-2"></i>AI Insights
-                    </button>
-                </div>
-
-                <!-- Language Toggle -->
-                <div class="mt-6 pt-6 border-t border-gray-200">
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Language</label>
-                    <select id="language-select" class="w-full border border-gray-300 rounded-lg px-3 py-2">
-                        <option value="en">English</option>
-                        <option value="ar">العربية</option>
-                    </select>
-                </div>
+            <div class="bg-yellow-100 rounded-full p-3">
+              <i class="fas fa-reply text-yellow-600"></i>
             </div>
+          </div>
+          <div class="mt-4">
+            <span class="text-green-600 text-sm font-medium">
+              <i class="fas fa-arrow-up"></i> 5%
+            </span>
+            <span class="text-gray-600 text-sm ml-2">vs last month</span>
+          </div>
         </div>
+
+        <div class="card rounded-xl p-6 shadow-xl">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-sm text-gray-600 mb-1">Leads Generated</p>
+              <p
+                id="leads-generated"
+                class="text-3xl font-bold text-purple-600"
+              >
+                0
+              </p>
+            </div>
+            <div class="bg-purple-100 rounded-full p-3">
+              <i class="fas fa-users text-purple-600"></i>
+            </div>
+          </div>
+          <div class="mt-4">
+            <span class="text-green-600 text-sm font-medium">
+              <i class="fas fa-arrow-up"></i> 15%
+            </span>
+            <span class="text-gray-600 text-sm ml-2">vs last week</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Charts and Analytics -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+        <!-- Message Performance Chart -->
+        <div class="card rounded-xl p-6 shadow-xl">
+          <h3 class="text-xl font-semibold text-gray-800 mb-4">
+            Message Performance
+          </h3>
+          <canvas id="messageChart" height="200"></canvas>
+        </div>
+
+        <!-- Account Health -->
+        <div class="card rounded-xl p-6 shadow-xl">
+          <h3 class="text-xl font-semibold text-gray-800 mb-4">
+            Account Health
+          </h3>
+          <div id="account-health" class="space-y-4">
+            <!-- Account health items will be populated here -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Campaign Management -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <!-- Active Campaigns -->
+        <div class="lg:col-span-2 card rounded-xl p-6 shadow-xl">
+          <div class="flex items-center justify-between mb-6">
+            <h3 class="text-xl font-semibold text-gray-800">
+              Active Campaigns
+            </h3>
+            <button
+              id="create-campaign-btn"
+              class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors"
+            >
+              <i class="fas fa-plus mr-2"></i>Create Campaign
+            </button>
+          </div>
+          <div id="campaigns-list" class="space-y-4">
+            <!-- Campaigns will be populated here -->
+          </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="card rounded-xl p-6 shadow-xl">
+          <h3 class="text-xl font-semibold text-gray-800 mb-6">
+            Quick Actions
+          </h3>
+          <div class="space-y-4">
+            <button
+              class="w-full bg-green-600 text-white px-4 py-3 rounded-lg hover:bg-green-700 transition-colors"
+            >
+              <i class="fas fa-play mr-2"></i>Start Automation
+            </button>
+            <button
+              class="w-full bg-red-600 text-white px-4 py-3 rounded-lg hover:bg-red-700 transition-colors"
+            >
+              <i class="fas fa-pause mr-2"></i>Pause All
+            </button>
+            <button
+              class="w-full bg-blue-600 text-white px-4 py-3 rounded-lg hover:bg-blue-700 transition-colors"
+            >
+              <i class="fas fa-download mr-2"></i>Export Data
+            </button>
+            <button
+              class="w-full bg-purple-600 text-white px-4 py-3 rounded-lg hover:bg-purple-700 transition-colors"
+            >
+              <i class="fas fa-robot mr-2"></i>AI Insights
+            </button>
+          </div>
+
+          <!-- Language Toggle -->
+          <div class="mt-6 pt-6 border-t border-gray-200">
+            <label class="block text-sm font-medium text-gray-700 mb-2"
+              >Language</label
+            >
+            <select
+              id="language-select"
+              class="w-full border border-gray-300 rounded-lg px-3 py-2"
+            >
+              <option value="en">English</option>
+              <option value="ar">العربية</option>
+            </select>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- Create Campaign Modal -->
-    <div id="campaign-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
-        <div class="flex items-center justify-center min-h-screen px-4">
-            <div class="bg-white rounded-xl p-8 max-w-md w-full">
-                <div class="flex items-center justify-between mb-6">
-                    <h3 class="text-xl font-semibold text-gray-800">Create New Campaign</h3>
-                    <button id="close-modal" class="text-gray-500 hover:text-gray-700">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
-                
-                <form id="campaign-form" class="space-y-4">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Campaign Name</label>
-                        <input type="text" id="campaign-name" class="w-full border border-gray-300 rounded-lg px-3 py-2" required>
-                    </div>
-                    
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Target Industry</label>
-                        <select id="target-industry" class="w-full border border-gray-300 rounded-lg px-3 py-2">
-                            <option value="healthcare">Healthcare</option>
-                            <option value="technology">Technology</option>
-                            <option value="finance">Finance</option>
-                            <option value="education">Education</option>
-                        </select>
-                    </div>
-                    
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Message Template</label>
-                        <textarea id="message-template" rows="4" class="w-full border border-gray-300 rounded-lg px-3 py-2" placeholder="Hi {firstName}, I noticed your work in {industry}..."></textarea>
-                    </div>
-                    
-                    <div class="flex space-x-4">
-                        <button type="button" id="cancel-campaign" class="flex-1 bg-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-400 transition-colors">
-                            Cancel
-                        </button>
-                        <button type="submit" class="flex-1 bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors">
-                            Create Campaign
-                        </button>
-                    </div>
-                </form>
+    <div
+      id="campaign-modal"
+      class="fixed inset-0 bg-black bg-opacity-50 hidden z-50"
+    >
+      <div class="flex items-center justify-center min-h-screen px-4">
+        <div class="bg-white rounded-xl p-8 max-w-md w-full">
+          <div class="flex items-center justify-between mb-6">
+            <h3 class="text-xl font-semibold text-gray-800">
+              Create New Campaign
+            </h3>
+            <button id="close-modal" class="text-gray-500 hover:text-gray-700">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+
+          <form id="campaign-form" class="space-y-4">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2"
+                >Campaign Name</label
+              >
+              <input
+                type="text"
+                id="campaign-name"
+                class="w-full border border-gray-300 rounded-lg px-3 py-2"
+                required
+              />
             </div>
+
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2"
+                >Target Industry</label
+              >
+              <select
+                id="target-industry"
+                class="w-full border border-gray-300 rounded-lg px-3 py-2"
+              >
+                <option value="healthcare">Healthcare</option>
+                <option value="technology">Technology</option>
+                <option value="finance">Finance</option>
+                <option value="education">Education</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2"
+                >Message Template</label
+              >
+              <textarea
+                id="message-template"
+                rows="4"
+                class="w-full border border-gray-300 rounded-lg px-3 py-2"
+                placeholder="Hi {firstName}, I noticed your work in {industry}..."
+              ></textarea>
+            </div>
+
+            <div class="flex space-x-4">
+              <button
+                type="button"
+                id="cancel-campaign"
+                class="flex-1 bg-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-400 transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                class="flex-1 bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors"
+              >
+                Create Campaign
+              </button>
+            </div>
+          </form>
         </div>
+      </div>
     </div>
 
     <script src="dashboard.js"></script>
-</body>
+  </body>
 </html>

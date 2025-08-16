@@ -76,7 +76,7 @@
       "holidays": [
         "2024-09-16", // Saudi National Day
         "2024-04-09", // Eid al-Fitr (example)
-        "2024-06-16"  // Eid al-Adha (example)
+        "2024-06-16" // Eid al-Adha (example)
       ]
     }
   }

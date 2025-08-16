@@ -67,11 +67,11 @@ npm run build:pages
 
 ## 📊 Cost Comparison
 
-| Solution | Monthly Cost | Setup Time | Control | Scalability |
-|----------|-------------|------------|---------|-------------|
-| **Expandi.io** (3 accounts) | $297/month | 1 day | Limited | Pay per seat |
-| **Dripify** (3 accounts) | $177/month | 1 day | Limited | Pay per seat |
-| **BrainSAIT Custom** | ~$20 (hosting) | 1 week | **Full** | **Unlimited** |
+| Solution                    | Monthly Cost   | Setup Time | Control  | Scalability   |
+| --------------------------- | -------------- | ---------- | -------- | ------------- |
+| **Expandi.io** (3 accounts) | $297/month     | 1 day      | Limited  | Pay per seat  |
+| **Dripify** (3 accounts)    | $177/month     | 1 day      | Limited  | Pay per seat  |
+| **BrainSAIT Custom**        | ~$20 (hosting) | 1 week     | **Full** | **Unlimited** |
 
 ## 🔧 Configuration
 
@@ -203,6 +203,7 @@ MIT License - see [LICENSE](LICENSE) file for details.
 ## 📞 Support
 
 For support and questions:
+
 - Email: support@brainsait.com
 - Documentation: [docs/](docs/)
 - Issues: [GitHub Issues](https://github.com/fadil369/brainsait-linkedin-automation/issues)
